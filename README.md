@@ -1,15 +1,15 @@
-#[XboxLiveApi v2.0.0](https://www.xboxleaders.com)
+#[XboxLiveAPI v2.0.0](https://www.xboxleaders.com)
 ###Simple & Powerful RESTful API For Xbox LIVE
 
-XboxLiveApi is a simple and powerful RESTful API created to obtain data from Xbox LIVE, created and
+XboxLiveAPI is a simple and powerful RESTful API created to obtain data from Xbox LIVE, created and
 maintained by [Jason Clemons](http://twitter.com/jasonclemons). Stay up to date [@xboxleaders](http://twitter.com/xboxleaders).
 
 Get started at https://www.xboxleaders.com!
 
 ##License
-- XboxLiveApi source files are licensed under the MIT License:
+- XboxLiveAPI source files are licensed under the MIT License:
   - http://opensource.org/licenses/mit-license.html
-- The XboxLiveApi documentation is licensed under the CC BY 3.0 License:
+- The XboxLiveAPI documentation is licensed under the CC BY 3.0 License:
   - http://creativecommons.org/licenses/by/3.0/
 - Attribution is not required, but much appreciated:
   - `Data Provided By XboxLeaders - https://www.xboxleaders.com`
@@ -20,7 +20,7 @@ Get started at https://www.xboxleaders.com!
 
 ##Versioning
 
-XboxLiveApi will be maintained under the Semantic Versioning guidelines as much as possible. Releases will be numbered with the following format:
+XboxLiveAPI will be maintained under the Semantic Versioning guidelines as much as possible. Releases will be numbered with the following format:
 
 `<major>.<minor>.<patch>`
 
