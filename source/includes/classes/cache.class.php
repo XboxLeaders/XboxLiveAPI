@@ -3,9 +3,11 @@
  * XboxLeaders Xbox LIVE REST API                                              *
  * =========================================================================== *
  * @file        cache.class.php                                                *
- * @package     XboxLeadersApi                                                 *
+ * @package     XboxLiveApi                                                    *
  * @version     2.0                                                            *
  * @copyright   (c) 2013 - Jason Clemons <me@jasonclemons.me>                  *
+ * @contributor Alan Wynn <http://github.com/djekl>                            *
+ * @contributor Luke Zbihlyj <http://github.com/lukezbihlyj>                   *
  * @license     http://opensource.org/licenses/mit-license.php The MIT License *
  *******************************************************************************/
 

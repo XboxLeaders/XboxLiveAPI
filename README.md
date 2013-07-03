@@ -2,7 +2,8 @@
 ###Simple & Powerful RESTful API For Xbox LIVE
 
 XboxLiveAPI is a simple and powerful RESTful API created to obtain data from Xbox LIVE, created and
-maintained by [Jason Clemons](http://twitter.com/jasonclemons). Stay up to date [@xboxleaders](http://twitter.com/xboxleaders).
+maintained by [Jason Clemons](http://twitter.com/jasonclemons) and [Alan Wynn](http://twitter.com/djekl).
+Stay up to date [@xboxleaders](http://twitter.com/xboxleaders).
 
 Get started at https://www.xboxleaders.com!
 
