@@ -42,7 +42,10 @@ For more information on SemVer, please visit http://semver.org.
 ## Using the XboxLiveAPI
 
 ### Profile Model
-`$data = $api->fetch_profile($gamertag, $region);`
+
+```php
+$data = $api->fetch_profile($gamertag, $region);`
+```
 
 ### Games Model
 
