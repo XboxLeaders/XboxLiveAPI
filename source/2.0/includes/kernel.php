@@ -16,6 +16,9 @@ include("classes/api.class.php");
 $api = new API($cache);
 
 $api->format = (isset($_GET['format']) && in_array($_GET['format'], array("xml", "json"))) ? strtolower(trim($_GET['format'])) : "xml";
+if(isset($_GET['callback']) && !empty($_GET['callback'])) {
+	$api->format = "jsonp";
+}
 $api->version = "2.0";
 $api->debug = (isset($_GET['debug']));
 $api->cookie_file = COOKIE_FILE;

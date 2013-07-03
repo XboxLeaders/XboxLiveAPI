@@ -57,7 +57,8 @@ class Base {
 		605 => "Could not write to the stack trace file.",
 		606 => "Windows Live caused an infinite redirect loop.",
 		607 => "The server timed out when trying to fetch some data.",
-		608 => "Could not write to the access file."
+		608 => "Could not write to the access file.",
+		700 => "The Xbox LIVE Service is down."
 	);
 
 	function __construct($cache) {
@@ -79,6 +80,9 @@ class Base {
 	}
 
 	public function output_headers() {
+		header("Content-Type: application/" . str_replace("jsonp", "javascript", $this->format) . "; charset=utf-8");
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Max-Age: 3628800');
 		header("Content-Type: application/" . $this->format . "; charset=utf-8");
 	}
 
@@ -105,6 +109,8 @@ class Base {
 				return output_pretty_xml($payload);
 			case "json":
 				return output_pretty_json($payload);
+			case "jsonp":
+				return output_pretty_jsonp($payload, $_GET['callback']);
 		}
 
 		return false;
@@ -136,6 +142,8 @@ class Base {
 				return output_pretty_xml($payload);
 			case "json":
 				return output_pretty_json($payload);
+			case "jsonp":
+				return output_pretty_jsonp($payload, $_GET['callback']);
 		}
 
 		return false;
@@ -444,6 +452,13 @@ function output_pretty_php($php) {
 function output_pretty_json($json) {
 	//!!! JSON_PRETTY_PRINT requires PHP 5.4+
 	return json_encode($json, JSON_PRETTY_PRINT);
+}
+
+/*!
+ * Not pretty, but it works. Outputs JSONP callback function.
+ */
+function output_pretty_jsonp($json, $callback) {
+	return $callback . "(" . json_encode($json, JSON_PRETTY_PRINT) . ");";
 }
 
 /*!
