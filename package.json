@@ -1,0 +1,27 @@
+{
+  "name": "xboxliveapi",
+  "description": "Simple & Powerful RESTful API for Xbox LIVE",
+  "version": "2.0",
+  "keywords": ["xbox", "xboxlive", "api", "rest"],
+  "homepage": "https://www.xboxleaders.com/",
+  "author": {
+    "name": "Jason Clemons",
+    "email": "me@jasonclemons.me",
+    "web": "http://twitter.com/jasonclemons"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XboxLeaders/XboxLiveApi.git"
+  },
+  "contributors": [
+  ],
+  "licenses": [
+    {
+      "type": "MIT License",
+      "url": "http://opensource.org/licenses/mit-license.html"
+    }
+  ],
+  "dependencies": {
+    "php": "5.2.0"
+  }
+}

@@ -1,0 +1,24 @@
+Header unset Pragma
+FileETag None
+Header unset ETag
+
+ExpiresActive On
+ExpiresDefault A0
+
+<FilesMatch "\.(php|cgi|pl|htm)$">
+ExpiresDefault A0 
+Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0, proxy-revalidate, no-transform"
+Header set Pragma "no-cache"
+</FilesMatch>
+
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteRule ^achievements\.(json|xml)$ achievements.php?format=$1 [L,QSA] 
+RewriteRule ^games\.(json|xml)$ games.php?format=$1 [L,QSA] 
+RewriteRule ^profile\.(json|xml)$ profile.php?format=$1 [L,QSA] 
+RewriteRule ^friends\.(json|xml)$ friends.php?format=$1 [L,QSA]
+RewriteRule ^search\.(json|xml)$ search.php?format=$1 [L,QSA]
+
+RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|OPTIONS|POST|PUT)
+RewriteRule .* - [F]
