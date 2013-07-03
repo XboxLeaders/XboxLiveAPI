@@ -38,6 +38,39 @@ For more information on SemVer, please visit http://semver.org.
 - Twitter: http://twitter.com/jasonclemons
 - GitHub: https://github.com/jasonclemons
 
+
+## Using the XboxLiveAPI
+
+### Profile Model
+
+```php
+$data = $api->fetch_profile($gamertag, $region);`
+```
+
+### Games Model
+
+```php
+$data = $api->fetch_games($gamertag, $region);
+```
+
+### Achievements Model
+
+```php
+$data = $api->fetch_achievements($gamertag, $gameid, $region);
+```
+
+### Friends Model
+
+```php
+$data = $api->fetch_friends($gamertag, $region);
+```
+
+### Search Model
+
+```php
+$data = $api->fetch_search($query, $region);
+```
+
 ## Hacking on XboxLiveAPI
 
 From the root of the repository, install the tools used to develop.
