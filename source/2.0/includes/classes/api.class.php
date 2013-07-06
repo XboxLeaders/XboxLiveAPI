@@ -136,7 +136,7 @@ class API extends Base {
 			$achievements['achievement']['current'] = $json['Game']['Progress'][$g]['Achievements'];
 			$achievements['achievement']['total'] = $json['Game']['PossibleAchievements'];
 			$achievements['progress'] = $json['Players'][0]['PercentComplete'];
-			$achievements['lastplayed'] = substr(str_replace(array("/Date(", ")/"), "", $json['Game']['Progress'][$g]['LastPlayed']), 0, 10);
+			$achievements['lastplayed'] = (int)substr(str_replace(array("/Date(", ")/"), "", $json['Game']['Progress'][$g]['LastPlayed']), 0, 10);
 			
 			$i = 0;
 			foreach($json['Achievements'] as $achievement) {
@@ -243,7 +243,7 @@ class API extends Base {
 					$games['games'][$i]['achievements']['current'] = $game['Progress'][$g]['Achievements'];
 					$games['games'][$i]['achievements']['total'] = $game['PossibleAchievements'];
 					$games['games'][$i]['progress'] = 0;
-					$games['games'][$i]['lastplayed'] = substr(str_replace(array("/Date(", ")/"), "", $game['Progress'][$g]['LastPlayed']), 0, 10);
+					$games['games'][$i]['lastplayed'] = (int)substr(str_replace(array("/Date(", ")/"), "", $game['Progress'][$g]['LastPlayed']), 0, 10);
 
 					$games['gamerscore']['total'] = $games['gamerscore']['total'] + $games['games'][$i]['gamerscore']['total'];
 					$games['achievements']['current'] = $games['achievements']['current'] + $games['games'][$i]['achievements']['current'];
@@ -260,7 +260,7 @@ class API extends Base {
 			$games['freshness'] = $freshness;
 			
 			return $games;
-		} else if($json['Data']['Players'][0]['Gamertag'] == "xboxleaders com") {
+		} else if($json['Data']['Players'][0]['Gamertag'] == "ACCOUNT_GAMERTAG") { //!!! Change this to the scraper account's gamertag
 			$this->error = 501;
 			return false;
 		} else {
@@ -313,7 +313,7 @@ class API extends Base {
 				$friends['friends'][$i]['gamerscore'] = $friend['GamerScore'];
 				$friends['friends'][$i]['online'] = $friend['IsOnline'] == 1 ? true : false;
 				$friends['friends'][$i]['status'] = $friend['Presence'];
-				$friends['friends'][$i]['lastseen'] = substr(str_replace(array("/Date(", ")/"), "", $friend['LastSeen']), 0, 10);
+				$friends['friends'][$i]['lastseen'] = (int)substr(str_replace(array("/Date(", ")/"), "", $friend['LastSeen']), 0, 10);
 
 				$friends['total'] = ++$friends['total'];
 				if($friend['IsOnline']) {
