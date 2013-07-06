@@ -117,6 +117,11 @@ class Base {
 	}
 
 	public function output_error($code) {
+		// output the response code
+		if(array_key_exists((int)$code, $this->errors)) {
+			http_response_code((int)$code);
+		}
+
 		if($this->version == "1.0") {
 			$payload = array(
 				"Error" => $this->errors[$code],
