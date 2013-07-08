@@ -12,26 +12,26 @@
  *******************************************************************************/
 
 class Base {
-	public $__cache;
+	public $__cache;                 // cache model resource
 
-	public $error;
-	public $stack_trace = array();
-	public $logged_in = false;
-	public $redirects = 0;
+	public $error;                   // error code
+	public $stack_trace = array();   // stack trace array for logging
+	public $logged_in = false;       // flag indicating whether the current session is logged in
+	public $redirects = 0;           // number of current redirects, prevents infinite loops
 
-	public $email, $password;
-	public $debug = false;
-	public $timeout = 8;
+	public $email, $password;        // email/password of the scraper account
+	public $debug = false;           // debug mode flag
+	public $timeout = 8;             // number of seconds to timeout session
 
-	public $cookie_file = "";
-	public $debug_file = "";
-	public $stack_trace_file = "";
-	public $access_file = "";
+	public $cookie_file = "";        // cookie jar path
+	public $debug_file = "";         // debug file path
+	public $stack_trace_file = "";   // stack trace file path
+	public $access_file = "";        // access log file path
 
-	public $runtime = null;
-	public $ip = null;
-	public $format = "xml";
-	public $version = null;
+	public $runtime = null;          // current runtime
+	public $ip = null;               // ip address to use for session, generated in __construct()
+	public $format = "xml";          // default response format
+	public $version = null;          // current api version
 
 	/**
 	 * Error Codes
@@ -166,6 +166,12 @@ class Base {
 		}
 	}
 
+	/**
+	 * Check culture code against Xbox's list of supported regions
+	 *
+	 * @var $code int
+	 * @return bool
+	 */
 	public function check_culture($code) {
 		$valid_codes = array(
 			'es-AR',	'en-AU',	'de-AT',	'nl-BE',
@@ -185,6 +191,11 @@ class Base {
 		return in_array($code, $valid_codes, true);
 	}
 
+	/**
+	 * Perform login to Xbox LIVE
+	 *
+	 * @return bool
+	 */
 	protected function perform_login() {
 		if(empty($this->email)) {
 			$this->error = 601;
@@ -265,6 +276,11 @@ class Base {
 		}
 	}
 
+	/**
+	 * Check the current session to see if it's logged in
+	 *
+	 * @return bool
+	 */
 	protected function check_login() {
 		if(file_exists($this->cookie_file)) {
 			if(time() - filemtime($this->cookie_file) >= 3600 || filesize($this->cookie_file) == 0) {
@@ -285,6 +301,11 @@ class Base {
 		}
 	}
 
+	/**
+	 * Force a new login session
+	 *
+	 * @return bool
+	 */
 	protected function force_new_login() {
 		$this->empty_cookie_file();
 		$this->logged_in = false;
@@ -297,6 +318,16 @@ class Base {
 		return false;
 	}
 
+	/**
+	 * Perform the actual HTTP request
+	 *
+	 * @var $url string
+	 * @var $referer string
+	 * @var $timeout int
+	 * @var $post_data array
+	 * @var $headers array
+	 * @return string
+	 */
 	protected function fetch_url($url, $referer = "", $timeout = null, $post_data = null, $headers = null) {
 		if($this->redirects > 4) {
 			$this->error = 606;
@@ -379,6 +410,14 @@ class Base {
 		return $result;
 	}
 
+	/**
+	 * Find a given string inside a string
+	 *
+	 * @var $haystack string
+	 * @var $start string
+	 * @var $finish string
+	 * @return string
+	 */
 	protected function find($haystack, $start, $finish) {
 		if(!empty($haystack)) {
 			$s = explode($start, $haystack);
@@ -395,7 +434,7 @@ class Base {
 
 	protected function clean($string) {
 		$string = html_entity_decode($string, ENT_QUOTES, "UTF-8");
-		$string = htmlentities(htmlentities($string, ENT_QUOTES, "UTF-8"));
+		$string = htmlentities($string, ENT_QUOTES, "UTF-8");
 
 		if(function_exists("mb_convert_encoding")) {
 			$string = mb_convert_encoding($string, "UTF-8");
