@@ -149,7 +149,7 @@ class API extends Base {
 				if(empty($coloredtile[0])) {
 					$achievements['achievements'][$i]['artwork']['unlocked'] = '';
 				} else {
-					$achievements['achievements'][$i]['artwork']['unlocked'] = 'https://image-ssl.xboxlive.com/global/t.' . dechex($json['Game']['Id']) . $coloredtile[0] . '/';
+					$achievements['achievements'][$i]['artwork']['unlocked'] = 'https://image-ssl.xboxlive.com/global/t.' . dechex($json['Game']['Id']) . $coloredtile[0];
 				}
 
 				if(!empty($achievement['Name'])) {
