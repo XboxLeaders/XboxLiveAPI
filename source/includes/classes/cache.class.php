@@ -12,8 +12,8 @@
  *******************************************************************************/
 
 class Cache {
-    public $driver = "disk";
-    public $root = "/tmp/";
+    public $driver = 'disk';
+    public $root = '/tmp/';
     
     public $hits = 0;
     public $misses = 0;
@@ -25,19 +25,19 @@ class Cache {
         if($driver) $this->driver = strtolower($driver);
         if($root) $this->root = $root;
         
-        if($this->driver == "apc") {
-            if(!function_exists("apc_fetch")) $this->driver = "disk";
-        } else if($this->driver == "memcached") {
-            if(!class_exists("Memcached")) $this->driver = "disk";
-        } else if($this->driver == "xcache") {
-            if(!function_exists("xcache_get")) $this->driver = "disk";
+        if($this->driver == 'apc') {
+            if(!function_exists('apc_fetch')) $this->driver = 'disk';
+        } else if($this->driver == 'memcached') {
+            if(!class_exists('Memcached')) $this->driver = 'disk';
+        } else if($this->driver == 'xcache') {
+            if(!function_exists('xcache_get')) $this->driver = 'disk';
         }
         
-        if($this->driver == "memcached") {
+        if($this->driver == 'memcached') {
             $this->__memcached = new Memcached();
-            $this->__memcached->addServer("localhost", 11211);
-        } else if($this->driver == "disk") {
-            $file = $this->root . "c_index";
+            $this->__memcached->addServer('localhost', 11211);
+        } else if($this->driver == 'disk') {
+            $file = $this->root . 'c_index';
             
             if(!file_exists($file)) {
                 $this->save_index();
@@ -48,8 +48,8 @@ class Cache {
             $handle = opendir($this->root);
             if($handle) {
                 while(false !== ($file = readdir($handle))) {
-                    if(substr($file, 0, 2) == "c_") {
-                        $key = str_replace(array("c_", ".cache"), "", $file);
+                    if(substr($file, 0, 2) == 'c_') {
+                        $key = str_replace(array('c_', '.cache'), '', $file);
                         $created = filemtime($this->root . $file);
                         $ttl = (int)$this->index[$key]['ttl'];
                         $expires = $created + $ttl;
@@ -68,13 +68,13 @@ class Cache {
     }
     
     public function fetch($key) {
-        if($this->driver == "apc") {
+        if($this->driver == 'apc') {
             $data = apc_fetch($key);
-        } else if($this->driver == "xcache") {
+        } else if($this->driver == 'xcache') {
             $data = xcache_get($key);
-        } else if($this->driver == "memcached") {
+        } else if($this->driver == 'memcached') {
             $data = $this->__memcached->get($key);
-        } else if($this->driver == "disk") {
+        } else if($this->driver == 'disk') {
             $file = $this->get_filename($key);
             if(file_exists($file)) {
                 $data = file_get_contents($file);
@@ -95,25 +95,25 @@ class Cache {
     public function store($key, $data, $ttl = 0) {
         $data = serialize($data);
         
-        if($this->driver == "apc") {
+        if($this->driver == 'apc') {
             return apc_store($key, $data, $ttl);
-        } else if($this->driver == "memcached") {
+        } else if($this->driver == 'memcached') {
             return $this->__memcached->set($key, $data, $ttl);
-        } else if($this->driver == "xcache") {
+        } else if($this->driver == 'xcache') {
             return xcache_set($key, $data, $ttl);
-        } else if($this->driver == "disk") {
+        } else if($this->driver == 'disk') {
             $file = $this->get_filename($key);
             
             if(file_exists($file)) {
                 unlink($file);
             }
             
-            $handle = fopen($file, "w");
+            $handle = fopen($file, 'w');
             fwrite($handle, $data);
             fclose($handle);
             
             $this->index[$key] = array(
-                "ttl" => $ttl
+                'ttl' => $ttl
             );
             
             $this->save_index();
@@ -123,13 +123,13 @@ class Cache {
     }
     
     public function remove($key) {
-        if($this->driver == "apc") {
+        if($this->driver == 'apc') {
             return apc_delete($key);
-        } else if($this->driver == "memcached") {
+        } else if($this->driver == 'memcached') {
             return $this->__memcached->delete($key);
-        } else if($this->driver == "xcache") {
+        } else if($this->driver == 'xcache') {
             return xcache_unset($key);
-        } else if($this->driver == "disk") {
+        } else if($this->driver == 'disk') {
             $file = $this->get_filename($key);
             
             if(file_exists($file)) {
@@ -144,15 +144,15 @@ class Cache {
     }
     
     protected function save_index() {
-        $file = $this->root . "c_index";
+        $file = $this->root . 'c_index';
         
-        $handle = fopen($file, "w");
+        $handle = fopen($file, 'w');
         fwrite($handle, serialize($this->index));
         fclose($handle);
     }
     
     protected function get_filename($key) {
-        return $this->root . "c_" . $key . ".cache";
+        return $this->root . 'c_' . $key . '.cache';
     }
 }
 

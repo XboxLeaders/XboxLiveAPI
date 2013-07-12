@@ -33,6 +33,11 @@ And constructed with the following guidelines:
 
 For more information on SemVer, please visit http://semver.org.
 
+##Workflow
+
+XboxLiveAPI will be developed using the [GitHub Workflow](http://scottchacon.com/2011/08/31/github-flow.html) as much as possible. All pull requests
+must be against the `*-wip` branches. Commits will be made to `*.0.x-dev` branches before being pushed to `master`.
+
 ##Author
 - Email: me@jasonclemons.me
 - Twitter: http://twitter.com/jasonclemons
@@ -44,7 +49,7 @@ For more information on SemVer, please visit http://semver.org.
 ### Profile Model
 
 ```php
-$data = $api->fetch_profile($gamertag, $region);`
+$data = $api->fetch_profile($gamertag, $region);
 ```
 
 ### Games Model

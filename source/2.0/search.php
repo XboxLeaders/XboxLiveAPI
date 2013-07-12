@@ -11,8 +11,8 @@
  * @license     http://opensource.org/licenses/mit-license.php The MIT License *
  *******************************************************************************/
 
-include("../includes/bootloader.php");
-include("includes/kernel.php");
+include('../includes/bootloader.php');
+include('includes/kernel.php');
 $api->output_headers();
 
 $query = (isset($_GET['query']) && !empty($_GET['query'])) ? trim($_GET['query']) : null;
