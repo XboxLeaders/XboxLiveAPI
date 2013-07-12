@@ -143,7 +143,14 @@ class API extends Base {
 				$achievements['achievements'][$i]['id'] = $achievement['Id'];
 				$achievements['achievements'][$i]['title'] = '';
 				$achievements['achievements'][$i]['artwork']['locked'] = $achievement['IsHidden'] ? 'https://live.xbox.com/Content/Images/HiddenAchievement.png' : $achievement['TileUrl'];
-				$achievements['achievements'][$i]['artwork']['unlocked'] = '';
+				// figure out the colored achievement tile (still hit or miss...)
+				preg_match('~/.*/.*/(.*?)\.jpg~si', $achievement['TileUrl'], $base64);
+				preg_match('~/ach/0/[0-9][0-9a-z]?[0-9a-z]?[0-9a-z]?~', base64_decode($base64[1]), $coloredtile);
+				if(empty($coloredtile[0])) {
+					$achievements['achievements'][$i]['artwork']['unlocked'] = '';
+				} else {
+					$achievements['achievements'][$i]['artwork']['unlocked'] = 'https://image-ssl.xboxlive.com/global/t.' . dechex($json['Game']['Id']) . $coloredtile[0];
+				}
 
 				if(!empty($achievement['Name'])) {
 					$achievements['achievements'][$i]['title'] = $this->clean($achievement['Name']);
