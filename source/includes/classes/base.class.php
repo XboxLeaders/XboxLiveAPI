@@ -123,7 +123,7 @@ class Base {
 			http_response_code((int)$code);
 		}
 
-		if($this->version == "1.0") {
+		if($this->version == '1.0') {
 			$payload = array(
 				'Error' => $this->errors[$code],
 				'In' => round(microtime(true) - $this->runtime, 3),
@@ -434,6 +434,10 @@ class Base {
 	}
 
 	protected function clean($string) {
+		if($this->format == 'xml') {
+			return $string;
+		}
+
 		$string = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
 		$string = htmlentities($string, ENT_QUOTES, 'UTF-8');
 
