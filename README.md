@@ -36,7 +36,7 @@ For more information on SemVer, please visit http://semver.org.
 ##Workflow
 
 XboxLiveAPI will be developed using the [GitHub Workflow](http://scottchacon.com/2011/08/31/github-flow.html) as much as possible. All pull requests
-must be against the `*-wip` branches. Commits will be made to `*.0.x-dev` branches before being pushed to `master`.
+must be against `*-dev` branches.
 
 ##Author
 - Email: me@jasonclemons.me
@@ -75,10 +75,3 @@ $data = $api->fetch_friends($gamertag, $region);
 ```php
 $data = $api->fetch_search($query, $region);
 ```
-
-## Hacking on XboxLiveAPI
-
-From the root of the repository, install the tools used to develop.
-
-    $ bundle install
-    $ npm install

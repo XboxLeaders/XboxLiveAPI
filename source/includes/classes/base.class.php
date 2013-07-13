@@ -123,7 +123,7 @@ class Base {
 			http_response_code((int)$code);
 		}
 
-		if($this->version == "1.0") {
+		if($this->version == '1.0') {
 			$payload = array(
 				'Error' => $this->errors[$code],
 				'In' => round(microtime(true) - $this->runtime, 3),
@@ -434,6 +434,10 @@ class Base {
 	}
 
 	protected function clean($string) {
+		if($this->format == 'xml') {
+			return $string;
+		}
+
 		$string = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
 		$string = htmlentities($string, ENT_QUOTES, 'UTF-8');
 
@@ -511,7 +515,7 @@ function output_pretty_jsonp($json, $callback) {
  */
 function output_pretty_xml($mixed, $xml = false) {
 	if($xml === false) {
-		$xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><xbox status="' . $mixed['status'] . '" version="' . $mixed['version'] . '" />');
+		$xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><xbox status="' . (empty($mixed['status']) ? $mixed['Stat'] : $mixed['status']) . '" version="' . (empty($mixed['version']) ? '1.0' : $mixed['version']) . '" />');
 	}
 
 	foreach($mixed as $key => $value) {
