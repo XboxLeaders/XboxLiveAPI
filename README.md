@@ -36,7 +36,7 @@ For more information on SemVer, please visit http://semver.org.
 ##Workflow
 
 XboxLiveAPI will be developed using the [GitHub Workflow](http://scottchacon.com/2011/08/31/github-flow.html) as much as possible. All pull requests
-must be against `*-dev` branches.
+must be against the `*.0.x-dev` branches before being pushed to `master`.
 
 ##Author
 - Email: me@jasonclemons.me
