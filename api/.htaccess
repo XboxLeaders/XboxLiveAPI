@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^(.*?)$ https://www.xboxleaders.com/api/1.0/$1 [L,QSA,NE]
