@@ -330,7 +330,7 @@ class Base {
 	 * @var $headers array
 	 * @return string
 	 */
-	protected function fetch_url($url, $referer = "", $timeout = null, $post_data = null, $headers = null) {
+	protected function fetch_url($url, $referer = '', $timeout = null, $post_data = null, $headers = null) {
 		if($this->redirects > 4) {
 			$this->error = 606;
 			return false;
@@ -508,7 +508,7 @@ function output_pretty_json($json) {
  * Not pretty, but it works. Outputs JSONP callback function.
  */
 function output_pretty_jsonp($json, $callback) {
-	return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT) . ');';
+	return preg_replace('~(<.*>)|(.*;)~g', '', $callback) . '(' . json_encode($json, JSON_PRETTY_PRINT) . ');';
 }
 
 /*!
