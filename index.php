@@ -31,6 +31,16 @@
   <link rel="shortcut icon" href="./assets/ico/favicon.ico">
 
   <!-- Google Analytics -->
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38684964-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
   <!-- END Google Analytics -->
 </head>
 <body data-spy="scroll" data-target=".navbar">
@@ -49,6 +59,7 @@
         <ul class="nav">
           <li class="hidden-tablet  active"><a href="./">Home</a></li>
           <li><a href="./get-started/">Get Started</a></li>
+          <li><a href="../region-chart/">Region Chart</a></li>
           <li class="dropdown-split-left"><a href="./community/">Community</a></li>
           <li class="dropdown dropdown-split-right hidden-phone">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -88,7 +99,7 @@
 </div>
 
 
-  <div class="jumbotron jumbotron-index hidden-print">
+<div class="jumbotron jumbotron-index hidden-print">
   <div class="container">
     <div class="row">
       <div class="span8">
@@ -96,7 +107,7 @@
           <h1>Xbox Live API</h1>
           <p>Simple & Powerful REST API For Xbox LIVE</p>
           <div class="actions">
-            <a class="btn btn-primary btn-large" href="./assets/xbox-api.zip"
+            <a class="btn btn-primary btn-large" href="https://github.com/XboxLeaders/XboxLiveAPI/zipball/master"
                onClick="_gaq.push(['_trackEvent', 'Outbound Link', 'Download on GitHub']);">
               <i class="icon-download-alt icon-large"></i>&nbsp;&nbsp;
               Download
@@ -167,7 +178,7 @@
   
     </div>
   </div>
-</section>
+  </section>
 
 
   <div id="why">
@@ -202,13 +213,13 @@
   <div class="row">
     <div class="span4">
       <h4><i class="icon-group"></i> Open Source</h4>
-      Open Source projects are awesome! Feel free to <a href="./contribute">contribute</a> in any way you can!
+      Open Source projects are awesome! Feel free to <a href="./community/">contribute</a> in any way you can!
     </div>
     <div class="span4">
     </div>
     <div class="span4">
     </div>
-</div>
+  </div>
 
   <section id="thanks-to">
   <h2 class="page-header">Thanks To</h2>
@@ -234,7 +245,7 @@
       </p>
     </div>
   </div>
-</section>
+  </section>
 
 </div>
 
