@@ -59,6 +59,7 @@
         <ul class="nav">
           <li class="hidden-tablet  active"><a href="./">Home</a></li>
           <li><a href="./get-started/">Get Started</a></li>
+          <li><a href="../region-chart/">Region Chart</a></li>
           <li class="dropdown-split-left"><a href="./community/">Community</a></li>
           <li class="dropdown dropdown-split-right hidden-phone">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

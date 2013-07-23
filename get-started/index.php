@@ -59,6 +59,7 @@
         <ul class="nav">
           <li class="hidden-tablet"><a href="../">Home</a></li>
           <li class="active"><a href="../get-started/">Get Started</a></li>
+          <li><a href="../region-chart/">Region Chart</a></li>
           <li class="dropdown-split-left"><a href="../community/">Community</a></li>
           <li class="dropdown dropdown-split-right hidden-phone">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -140,7 +141,7 @@
 </section>
 
 
-<div id="bootstrapcdn">
+<section>
   <h2 class="page-header">EASY: XboxLeaders-Provided API</h2>
   <p>By using a simple wrapper class, you can start using the API within minutes!</p>
   <ol>
@@ -157,7 +158,7 @@
   </ol>
 </div>
 
-<section id="default-css">
+<section>
   <h2 class="page-header">PRO: Set Up API Server</h2>
   <p>Use this method to set up the API on your own server. This will allow you more control over the API itself.</p>
   <ol>
@@ -166,12 +167,12 @@
       credentials, as you will need them later.
     </li>
     <li>
-      <a href="../assets/xbox-api.zip">Download</a> the API repository, and place the <code>/source</code> directory where you want your API to reside. It
+      <a href="https://github.com/XboxLeaders/XboxLiveAPI/zipball/master">Download</a> the API repository, and place the <code>/source</code> directory where you want your API to reside. It
       must be placed in a public directory.
     </li>
     <li>
-      Find the file <code>/includes/bootloader.php</code>, and insert your Xbox LIVE login details in the <code>XBOX_EMAIL</code>
-      and <code>XBOX_PASSWORD</code> constants.
+      Find the file <code>/includes/bootloader.php</code>, and insert your Xbox LIVE login details in the <code>XBOX_EMAIL</code>,
+      <code>XBOX_PASSWORD</code>, and <code>XBOX_GAMERTAG</code> constants.
     </li>
     <li>Check out the <a href="../examples/">examples</a> to start using the API!</li>
   </ol>
