@@ -34,6 +34,7 @@ class Base {
 	public $format = 'xml';          // default response format
 	public $version = null;          // current api version
 	public $offline = false;         // api offline
+	public $callback = 'foo';        // callback function for jsonp responses
 
 	/**
 	 * Error Codes
@@ -111,7 +112,7 @@ class Base {
 			case 'json':
 				return output_pretty_json($payload);
 			case 'jsonp':
-				return output_pretty_jsonp($payload, $_GET['callback']);
+				return output_pretty_jsonp($payload, $this->callback);
 		}
 
 		return false;
@@ -149,7 +150,7 @@ class Base {
 			case 'json':
 				return output_pretty_json($payload);
 			case 'jsonp':
-				return output_pretty_jsonp($payload, $_GET['callback']);
+				return output_pretty_jsonp($payload, $this->callback);
 		}
 
 		return false;
@@ -500,15 +501,14 @@ function output_pretty_php($php) {
 
 function output_pretty_json($json) {
 	//!!! JSON_PRETTY_PRINT requires PHP 5.4+
-	return json_encode($json, JSON_PRETTY_PRINT);
+	return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 }
 
 /*!
  * Not pretty, but it works. Outputs JSONP callback function.
  */
 function output_pretty_jsonp($json, $callback) {
-	$callback = preg_replace('~(<.*>)|(.*;)~g', '', $callback);
-	return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT) . ');';
+	return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
 }
 
 /*!
