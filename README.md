@@ -16,18 +16,34 @@ Get started at https://www.xboxleaders.com/get-started/!
   - `Data Provided By XboxLeaders - https://www.xboxleaders.com`
 - Full details: https://www.xboxleaders.com/license
 
-##Workflow
+## Getting Started
+  1. PHP >5.4.0 Required
+  2. [APC](http://pecl.php.net/package/apc)/XCache/Memcached Highly Recommended
+  3. Install using [Composer](#composer-installation)
 
-XboxLiveAPI will be developed using the [GitHub Workflow](http://scottchacon.com/2011/08/31/github-flow.html) as much as possible. All pull requests
-must be against the `*.0.x-dev` branches before being pushed to `master`.
-
-##Author
-- Email: me@jasonclemons.me
-- Twitter: http://twitter.com/jasonclemons
-- GitHub: https://github.com/jasonclemons
+## Composer
+  1. Get [Composer](http://getcomposer.org)
+  2. Require xboxleaders/xboxliveapi `php composer.phar require xboxleaders/xboxliveapi`
+  3. Install dependencies with `php composer.phar install`
 
 
 ## Using the XboxLiveAPI
+There are two main ways in which you can use the XboxLiveAPI. The main one, which is what
+is used on xboxleaders.com, is the RESTful API. XboxLiveAPI comes ready to do this right
+out of the box, and only needs to be placed in a publicly accessible directory, and add
+login credentials to `bootloader.php`.
+
+The second way to use the API is to call it directly using the endpoint models. Here's
+an example on how to do this:
+
+    <?php
+    require('../api/{version}/includes/kernel.php');
+    
+    // fetch profile model
+    $data = $api->fetch_profile('Major Nelson', 'en-GB');
+
+It's really that simple. Below are the other models that you can use to return results. Keep
+in mind that the `search` endpoint is NOT in version 1.0.
 
 ### Profile Model
 
