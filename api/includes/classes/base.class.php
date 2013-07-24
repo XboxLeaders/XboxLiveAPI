@@ -85,7 +85,6 @@ class Base {
 		header('Content-Type: application/' . str_replace('jsonp', 'javascript', $this->format) . '; charset=utf-8');
 		header('Access-Control-Allow-Origin: *');
 		header('Access-Control-Max-Age: 3628800');
-		header('Content-Type: application/' . $this->format . '; charset=utf-8');
 	}
 
 	public function output_payload($data) {
@@ -508,7 +507,8 @@ function output_pretty_json($json) {
  * Not pretty, but it works. Outputs JSONP callback function.
  */
 function output_pretty_jsonp($json, $callback) {
-	return preg_replace('~(<.*>)|(.*;)~g', '', $callback) . '(' . json_encode($json, JSON_PRETTY_PRINT) . ');';
+	$callback = preg_replace('~(<.*>)|(.*;)~g', '', $callback);
+	return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT) . ');';
 }
 
 /*!
