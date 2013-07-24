@@ -7,20 +7,23 @@
     {
       "name": "Jason Clemons",
       "email": "me@jasonclemons.me",
-      "role": "Developer",
-      "homepage": "http://twitter.com/jasonclemons"
+      "role": "Creator/Developer",
+      "homepage": "http://jasonclemons.me"
+    },
+    {
+      "name": "Alan Wynn",
+      "email": "hello@alanwynn.me",
+      "role": "Contributor/Developer",
+      "homepage": "https://alanwynn.me"
     }
   ],
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
   "license": [
       "MIT"
   ],
+  "require": {
+      "php": ">=5.4.0"
+  },
   "require-dev": {
-      "jekyll": "1.0.2",
-      "lessc": "1.3.3"
+      "phpunit/phpunit": "3.7.x"
   }
 }
