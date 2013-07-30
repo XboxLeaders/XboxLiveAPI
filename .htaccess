@@ -1,8 +1,14 @@
 RewriteEngine On
 
+# Force HTTPS
 RewriteCond %{HTTP_HOST} ^xboxleaders\.com$ [OR]
 RewriteCond %{HTTPS} !on
 RewriteRule ^(.*)$ https://www.xboxleaders.com/$1 [R,L]
+
+# Remove file extensions
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^/]+)/$ $1.php 
 
 # Forces a trailing slash to be added
 RewriteCond %{REQUEST_FILENAME} !-f
