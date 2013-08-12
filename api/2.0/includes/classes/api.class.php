@@ -132,6 +132,7 @@ class API extends Base {
 			
 			$achievements['gamertag'] = $g = $json['Players'][0]['Gamertag'];
 			$achievements['game'] = $this->clean($json['Game']['Name']);
+            $achievements['id'] = $json['Game']['Id'];
 			$achievements['gamerscore']['current'] = $json['Game']['Progress'][$g]['Score'];
 			$achievements['gamerscore']['total'] = $json['Game']['PossibleScore'];
 			$achievements['achievement']['current'] = $json['Game']['Progress'][$g]['Achievements'];
