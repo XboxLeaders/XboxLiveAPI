@@ -199,7 +199,7 @@
   <div class="row">
     <div class="span4">
       <h4><i class="icon-microphone"></i> Free, as in Speech</h4>
-      Font Awesome is completely free for commercial use. Check out the <a href="./license/">license</a>.
+      XboxLiveAPI is completely free for commercial use. Check out the <a href="./license/">license</a>.
     </div>
     <div class="span4">
       <h4><i class="icon-globe"></i> Multi-Region Support</h4>
