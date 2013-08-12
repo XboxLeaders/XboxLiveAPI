@@ -49,6 +49,7 @@ class API extends Base {
 			$user['avatar']['full'] = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatar-body.png';
 			$user['avatar']['small'] = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-s.png';
 			$user['avatar']['large'] = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-l.png';
+            $user['avatar']['tile'] = trim($this->find($data, '<img class="gamerpic" src="', '" alt="'));
 			$user['gamerscore'] = (int)trim($this->find($data, '<div class="gamerscore">', '</div>'));
 			$user['reputation'] = 0;
 			$user['presence'] = trim(str_replace("\r\n", ' - ', trim($this->find($data, '<div class="presence">', '</div>'))));
