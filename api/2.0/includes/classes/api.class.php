@@ -34,7 +34,7 @@ class API extends Base {
 		if(!$data) {
 			$data = $this->fetch_url($url);
 			$freshness = 'new';
-			$this->__cache->store($key, $data, 180);
+			$this->__cache->store($key, $data, 1800);
 		} else {
 			$freshness = 'from cache';
 		}
@@ -119,7 +119,7 @@ class API extends Base {
 		if(!$data) {
 			$data = $this->fetch_url($url);
 			$freshness = 'new';
-			$this->__cache->store($key, $data, 600);
+			$this->__cache->store($key, $data, 1800);
 		} else {
 			$freshness = 'from cache';
 		}
@@ -221,7 +221,7 @@ class API extends Base {
 			
 			$data = $this->fetch_url('https://live.xbox.com/' . $region . '/Activity/Summary?compareTo=' . urlencode($gamertag) . '&lc=1033', $url, 10, $post_data, $headers);
 			$freshness = 'new';
-			$this->__cache->store($key, $data, 600);
+			$this->__cache->store($key, $data, 1800);
 		} else {
 			$freshness = 'from cache';
 		}
@@ -303,7 +303,7 @@ class API extends Base {
 
 			$data = $this->fetch_url('https://live.xbox.com/' . $region . '/Friends/List?Gamertag=' . urlencode($gamertag), $url, 10, $post_data, $headers);
 			$freshness = 'new';
-			$this->__cache->store($data, 600);
+			$this->__cache->store($data, 1800);
 		} else {
 			$freshness = 'from cache';
 		}
@@ -363,7 +363,7 @@ class API extends Base {
 		if(!$data) {
 			$data = $this->fetch_url($url);
 			$freshness = 'new';
-			$this->__cache->store($data, 6000);
+			$this->__cache->store($data, 3600);
 		} else {
 			$freshness = 'from cache';
 		}

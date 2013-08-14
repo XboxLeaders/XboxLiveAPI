@@ -31,7 +31,7 @@ class API extends Base {
 		$data = $this->__cache->fetch($key);
 		if(!$data) {
 			$data = $this->fetch_url($url);
-			$this->__cache->store($key, $data, 180);
+			$this->__cache->store($key, $data, 1800);
 		}
 
 		if(stripos($data, "<section class=\"contextRail custom\">")) {
@@ -118,7 +118,7 @@ class API extends Base {
 		$data = $this->__cache->fetch($key);
 		if(!$data) {
 			$data = $this->fetch_url($url);
-			$this->__cache->store($key, $data, 600);
+			$this->__cache->store($key, $data, 1800);
 		}
 		
 		$json = $this->find($data, "broker.publish(routes.activity.details.load, ", ");");
@@ -212,7 +212,7 @@ class API extends Base {
 			$headers = array("X-Requested-With: XMLHttpRequest", "Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
 			
 			$data = $this->fetch_url("https://live.xbox.com/" . $region . "/Activity/Summary?compareTo=" . urlencode($gamertag) . "&lc=1033", $url, 10, $post_data, $headers);
-			$this->__cache->store($key, $data, 600);
+			$this->__cache->store($key, $data, 1800);
 		}
 
 		$json = json_decode($data, true);
@@ -286,7 +286,7 @@ class API extends Base {
 			$headers = array("X-Requested-With: XMLHttpRequest", "Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
 
 			$data = $this->fetch_url("https://live.xbox.com/" . $region . "/Friends/List?Gamertag=" . urlencode($gamertag), $url, 10, $post_data, $headers);
-			$this->__cache->store($data, 600);
+			$this->__cache->store($data, 1800);
 		}
 
 		$json = json_decode($data, true);
