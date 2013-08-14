@@ -1,4 +1,4 @@
-#[XboxLiveAPI v2.0.0](https://www.xboxleaders.com)
+#[XboxLiveAPI](https://www.xboxleaders.com)
 ###Simple & Powerful RESTful API For Xbox LIVE
 
 XboxLiveAPI is a simple and powerful RESTful API created to obtain data from Xbox LIVE, created and
@@ -6,6 +6,8 @@ maintained by [Jason Clemons](http://twitter.com/jasonclemons) and [Alan Wynn](h
 Stay up to date [@xboxleaders](http://twitter.com/xboxleaders).
 
 Get started at https://www.xboxleaders.com/get-started/!
+
+Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6) to keep the servers alive!
 
 ##License
 - XboxLiveAPI source files are licensed under the MIT License:
@@ -17,9 +19,11 @@ Get started at https://www.xboxleaders.com/get-started/!
 - Full details: https://www.xboxleaders.com/license
 
 ## Getting Started
-  1. PHP >5.4.0 Required
-  2. [APC](http://pecl.php.net/package/apc)/XCache/Memcached Highly Recommended
-  3. Install using [Composer](#composer-installation)
+  1. [PHP](http://php.net/downloads.php) 5.4 or higher required
+  2. [Apache](http://httpd.apache.org) 2.2 or higher required
+  3. [cURL](http://php.net/curl) and [JSON](http://pecl.php.net/package/json) libraries required
+  4. [APC](http://pecl.php.net/package/apc)/[XCache](http://xcache.lighttpd.net)/[Memcached](http://memcached.org) highly recommended
+  5. Install using [Composer](http://getcomposer.org)
 
 ## Composer
   1. Get [Composer](http://getcomposer.org)
@@ -27,7 +31,7 @@ Get started at https://www.xboxleaders.com/get-started/!
   3. Install dependencies with `php composer.phar install`
 
 
-## Using the XboxLiveAPI
+## Using the Xbox Live API
 There are two main ways in which you can use the XboxLiveAPI. The main one, which is what
 is used on xboxleaders.com, is the RESTful API. XboxLiveAPI comes ready to do this right
 out of the box, and only needs to be placed in a publicly accessible directory, and add
