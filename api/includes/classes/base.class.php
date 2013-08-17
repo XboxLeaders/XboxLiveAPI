@@ -52,7 +52,7 @@ class Base {
 		502 => 'The gamertag supplied has never played this game or does not exist on Xbox Live.',
 		503 => 'No friends found, or friend\'s list is set to private.',
 		504 => 'The search query returned empty.',
-		600 => 'Could not login to Windows Live. Please contact me immediately.',
+		600 => 'Could not login to Windows Live. Please email support@xboxleaders.com.',
 		601 => 'The Windows Live email address supplied was invalid.',
 		602 => 'The Windows Live password supplied was invalid.',
 		603 => 'Could not write to the cookie file.',
