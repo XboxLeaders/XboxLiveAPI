@@ -25,68 +25,34 @@ define('CACHE_ENGINE', 'apc');
  */
 $accounts = array(
     array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
+        'email'    => '',
+        'password' => '',
+        'gamertag' => ''
     ),
     array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
+        'email'    => '',
+        'password' => '',
+        'gamertag' => ''
     ),
     array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
-    ),
-    array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
-    ),
-    array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
-    ),
-    array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
-    ),
-    array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
-    ),
-    array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
-    ),
-    array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
-    ),
-    array(
-        'email' => '',
-        'passwd' => '',
-        'gamertag' => '',
+        'email'    => '',
+        'password' => '',
+        'gamertag' => ''
     )
 );
 
 /*!
  * Pick a random email to login
  */
-$id = rand(0, count($accounts['email']));
-$account = $accounts['email'][$id];
+$id = rand(0, (count($accounts) - 1));
+$account = $accounts[$id];
 
 /*!
  * Define the account credentials
  */
 define('XBOX_EMAIL', $account['email']);
-define('XBOX_PASSWORD', $account['passwd']);
+define('XBOX_PASSWORD', $account['password']);
+define('XBOX_GAMERTAG', $account['gamertag']);
 
 /*!
  * Define some log file locations.
