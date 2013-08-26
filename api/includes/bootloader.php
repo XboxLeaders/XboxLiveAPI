@@ -23,24 +23,64 @@ define('CACHE_ENGINE', 'apc');
 /*!
  * Define the account details.
  */
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-$accounts['email'][] = '';
-
-$accounts['passwd'] = '';
+$accounts = array(
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    ),
+    array(
+        'email' => '',
+        'passwd' => '',
+        'gamertag' => '',
+    )
+);
 
 /*!
  * Pick a random email to login
  */
 $id = rand(0, count($accounts['email']));
-$account = $account['email'][$id];
+$account = $accounts['email'][$id];
 
 /*!
  * Define the account credentials
