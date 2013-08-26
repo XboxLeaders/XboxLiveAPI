@@ -18,22 +18,43 @@ include('classes/base.class.php');
  * Define the caching engine to be used.
  * Supports: apc, memcached, xcache, disk
  */
-const CACHE_ENGINE = 'apc';
+define('CACHE_ENGINE', 'apc');
 
 /*!
  * Define the account details.
  */
-const XBOX_EMAIL = '';     // xbox live email
-const XBOX_PASSWORD = '';  // xbox live password
-const XBOX_GAMERTAG = '';  // xbox live gamertag
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+$accounts['email'][] = '';
+
+$accounts['passwd'] = '';
+
+/*!
+ * Pick a random email to login
+ */
+$id = rand(0, count($accounts['email']));
+$account = $account['email'][$id];
+
+/*!
+ * Define the account credentials
+ */
+define('XBOX_EMAIL', $account['email']);
+define('XBOX_PASSWORD', $account['passwd']);
 
 /*!
  * Define some log file locations.
  */
-const COOKIE_FILE = '../includes/login_cookies.jar';         // path to cookie file
-const DEBUG_FILE = '../includes/logs/debug.log';             // path to debug log
-const STACK_TRACE_FILE = '../includes/logs/stack_trace.log'; // path to stack trace
-const ACCESS_FILE = '../includes/logs/access.log';           // path to access log
+define('COOKIE_FILE', '../includes/cookies/' . XBOX_EMAIL . '.jar'); // path to cookie file
+define('DEBUG_FILE', '../includes/logs/debug.log');                  // path to debug log
+define('STACK_TRACE_FILE', '../includes/logs/stack_trace.log');      // path to stack trace
+define('ACCESS_FILE', '../includes/logs/access.log');                // path to access log
 
 /*!
  * Initiate the caching engine.
