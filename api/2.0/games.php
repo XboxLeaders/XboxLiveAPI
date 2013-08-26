@@ -24,8 +24,8 @@ if(!$api->logged_in) {
     if(empty($gamertag)) {
         echo $api->output_error(301);
     } else if($api->check_culture($region) == false) {
-		echo $api->output_error(305);
-	} else {
+        echo $api->output_error(305);
+    } else {
         $data = $api->fetch_games($gamertag, $region);
         if($data) {
             echo $api->output_payload($data);

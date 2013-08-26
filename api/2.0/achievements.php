@@ -27,8 +27,8 @@ if(!$api->logged_in) {
     } else if(empty($gameid)) {
         echo $api->output_error(302);
     } else if($api->check_culture($region) == false) {
-		echo $api->output_error(305);
-	} else {
+        echo $api->output_error(305);
+    } else {
         $data = $api->fetch_achievements($gamertag, $gameid, $region);
         if($data) {
             echo $api->output_payload($data);

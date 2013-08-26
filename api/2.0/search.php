@@ -24,8 +24,8 @@ if(!$api->logged_in) {
     if(empty($query)) {
         echo $api->output_error(306);
     } else if($api->check_culture($region) == false) {
-		echo $api->output_error(305);
-	} else {
+        echo $api->output_error(305);
+    } else {
         $data = $api->fetch_search($query, $region);
         if($data) {
             echo $api->output_payload($data);
