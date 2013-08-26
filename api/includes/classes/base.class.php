@@ -36,7 +36,7 @@ class Base {
     public $offline = false;         // api offline
     public $callback = 'foo';        // callback function for jsonp responses
 
-    /**
+    /*!
      * Error Codes
      */
     public $errors = array(
@@ -64,6 +64,9 @@ class Base {
         700 => 'The Xbox LIVE Service is down.'
     );
 
+    /*!
+     * Construct the cache, runtime, and random ip address
+     */
     function __construct($cache) {
         if($cache) $this->__cache = &$cache;
         
@@ -71,6 +74,9 @@ class Base {
         $this->ip = rand(60, 80) . '.' . rand(60, 140) . '.' . rand(80, 120) . '.' . rand(120, 200);
     }
 
+    /*!
+     * Initiate the scraper
+     */
     public function init($email, $password) {
         $this->email = str_replace('@', '%40', strtolower($email));
         $this->password = $password;
@@ -82,13 +88,23 @@ class Base {
         }
     }
 
+    /*!
+     * Output the necessary headers
+     */
     public function output_headers() {
         header('Content-Type: application/' . str_replace('jsonp', 'javascript', $this->format) . '; charset=utf-8');
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Max-Age: 3628800');
     }
 
+    /*!
+     * Output the entire payload to the browser
+     */
     public function output_payload($data) {
+        // output the response code
+        if(array_key_exists((int)$code, $this->errors)) {
+            http_response_code((int)$code);
+        }
         if($this->version == '1.0') {
             $payload = array(
                 'Data' => $data,
@@ -118,6 +134,9 @@ class Base {
         return false;
     }
 
+    /*!
+     * Output an error if one is found
+     */
     public function output_error($code) {
         // output the response code
         if(array_key_exists((int)$code, $this->errors)) {
@@ -156,6 +175,9 @@ class Base {
         return false;
     }
 
+    /*!
+     * Saves access data to access log, if enabled
+     */
     public function save_to_access($string) {
         if($this->debug == true) {
             $file = fopen($this->access_file, 'a+');
@@ -168,11 +190,8 @@ class Base {
         }
     }
 
-    /**
+    /*!
      * Check culture code against Xbox's list of supported regions
-     *
-     * @var $code int
-     * @return bool
      */
     public function check_culture($code) {
         $valid_codes = array(
@@ -193,10 +212,8 @@ class Base {
         return in_array($code, $valid_codes, true);
     }
 
-    /**
-     * Perform login to Xbox LIVE
-     *
-     * @return bool
+    /*!
+     * Perform the actual login to Xbox LIVE
      */
     protected function perform_login() {
         if(empty($this->email)) {
@@ -278,10 +295,8 @@ class Base {
         }
     }
 
-    /**
+    /*!
      * Check the current session to see if it's logged in
-     *
-     * @return bool
      */
     protected function check_login() {
         if(file_exists($this->cookie_file)) {
@@ -303,10 +318,8 @@ class Base {
         }
     }
 
-    /**
+    /*!
      * Force a new login session
-     *
-     * @return bool
      */
     protected function force_new_login() {
         $this->empty_cookie_file();
@@ -320,15 +333,8 @@ class Base {
         return false;
     }
 
-    /**
+    /*!
      * Perform the actual HTTP request
-     *
-     * @var $url string
-     * @var $referer string
-     * @var $timeout int
-     * @var $post_data array
-     * @var $headers array
-     * @return string
      */
     protected function fetch_url($url, $referer = '', $timeout = null, $post_data = null, $headers = null) {
         if($this->redirects > 4) {
@@ -371,6 +377,7 @@ class Base {
 
         $result = curl_exec($ch);
 
+        // checking for redirects
         if(stripos($result, '<title>Object moved</title>') !== false) {
             $follow = urldecode(trim($this->find($result, '<a href="', '">')));
 
@@ -381,7 +388,9 @@ class Base {
                 $this->redirects++;
                 $result = $this->fetch_url($follow, $url);
             }
-        } else if(stripos($result, '<!-------Error Info') !== false) {
+        }
+        // for some reason, there's an error and we cannot continue...
+        else if(stripos($result, '<!-------Error Info') !== false) {
             $this->force_new_login();
 
             if($this->logged_in) {
@@ -391,7 +400,9 @@ class Base {
                 $this->error = 600;
                 return false;
             }
-        } else if(stripos($result, 'UserAcceptsNewTermsOfUse') !== false) {
+        }
+        // if we get stopped to agree to a new ToU, accept it
+        else if(stripos($result, 'UserAcceptsNewTermsOfUse') !== false) {
             $follow = 'https://live.xbox.com' . $this->find($result, '<form action="', '" method="post">');
             $token = $this->find($result, '<input name="__RequestVerificationToken" type="hidden" value="', '" />');
             $post = 'UserAcceptsNewTermsOfUse=true&__RequestVerificationToken=' . urlencode($token);
@@ -412,13 +423,8 @@ class Base {
         return $result;
     }
 
-    /**
+    /*!
      * Find a given string inside a string
-     *
-     * @var $haystack string
-     * @var $start string
-     * @var $finish string
-     * @return string
      */
     protected function find($haystack, $start, $finish) {
         if(!empty($haystack)) {
@@ -434,6 +440,10 @@ class Base {
         return false;
     }
 
+    /*!
+     * Clean a response from the server. Converts everything to UTF-8,
+     * and cleans HTML characters.
+     */
     protected function clean($string) {
         if($this->format == 'xml') {
             return $string;
@@ -451,6 +461,9 @@ class Base {
         return $string;
     }
 
+    /*!
+     * Add cookie data to the cookie jar
+     */
     protected function add_cookie($domain, $name, $value, $path = '/', $expires = 0) {
         $file = fopen($this->cookie_file, 'a');
         if(!$file) {
@@ -461,6 +474,9 @@ class Base {
         }
     }
 
+    /*!
+     * Clear the entire cookie jar, because momma's making a new batch ;)
+     */
     protected function empty_cookie_file() {
         $this->logged_in = false;
 
@@ -470,6 +486,9 @@ class Base {
         }
     }
 
+    /*!
+     * Save items to the debug log
+     */
     protected function save_to_debug($string) {
         if($this->debug == true) {
             $file = fopen($this->debug_file, 'a+');
@@ -482,6 +501,9 @@ class Base {
         }
     }
 
+    /*!
+     * Save a stack trace to the stack trace log
+     */
     protected function save_stack_trace() {
         if($this->debug == true) {
             $file = fopen($this->stack_trace_file, 'w');
@@ -500,7 +522,6 @@ function output_pretty_php($php) {
 }
 
 function output_pretty_json($json) {
-    //!!! JSON_PRETTY_PRINT requires PHP 5.4+
     return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 }
 
