@@ -155,7 +155,7 @@ class API extends Base {
                 // subtract last 12 spaces and/or whitespace from string
                 $ach_str3 = substr($ach_str2, 0, -11);
                 // create color tile source
-                $ach_color = 'https://image-ssl.xboxlive.com/global/t.' . dechex($json['Game']['Id'] . '/' . $ach_str3;
+                $ach_color = 'https://image-ssl.xboxlive.com/global/t.' . dechex($json['Game']['Id']) . $ach_str3;
 
                 $achievements['achievements'][$i]['artwork']['locked'] = $achievement['IsHidden'] ? 'https://live.xbox.com/Content/Images/HiddenAchievement.png' : $achievement['TileUrl'];
                 $achievements['achievements'][$i]['artwork']['unlocked'] = $achievement['IsHidden'] ? 'https://live.xbox.com/Content/Images/HiddenAchievement.png' : $ach_color;
