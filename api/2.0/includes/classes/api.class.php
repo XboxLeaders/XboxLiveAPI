@@ -148,19 +148,14 @@ class API extends Base {
                 // find colored achievement tile
                 // get image name. removes url and extension
                 $ach_info = pathinfo($achievement['TileUrl']);
-                $ach_file = basename($ach_file, '.' . $info['extension']);
                 // decode image name
-                $ach_str1 = base64_decode($ach_file);
-                // convert special chars
-                $ach_res = nl2br(htmlspecialchars($ach_str1, ENT_QUOTES));
-                // subtract last 11 spaces and/or whitespace from string
-                $ach_str2 = substr($ach_res, 0, -11);
+                $ach_str1 = base64_decode($ach_info['filename']);
                 // remove everything before /ach
-                $ach_str3 = strstr($ach_str2, '/ach');
-                // convert games decimal to hexadecimal
-                $ach_gid = dechex($json['Game']['Id']);
+                $ach_str2 = strstr($ach_str1, '/ach');
+                // subtract last 12 spaces and/or whitespace from string
+                $ach_str3 = substr($ach_str2, 0, -11);
                 // create color tile source
-                $ach_color = 'https://image-ssl.xboxlive.com/global/t.' . $ach_gid . $ach_str3;
+                $ach_color = 'https://image-ssl.xboxlive.com/global/t.' . dechex($json['Game']['Id'] . '/' . $ach_str3;
 
                 $achievements['achievements'][$i]['artwork']['locked'] = $achievement['IsHidden'] ? 'https://live.xbox.com/Content/Images/HiddenAchievement.png' : $achievement['TileUrl'];
                 $achievements['achievements'][$i]['artwork']['unlocked'] = $achievement['IsHidden'] ? 'https://live.xbox.com/Content/Images/HiddenAchievement.png' : $ach_color;
