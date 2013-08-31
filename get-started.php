@@ -156,7 +156,7 @@
       Check out the <a href="../examples/">examples</a> to start using the API!
     </li>
   </ol>
-</div>
+</section>
 
 <section>
   <h2 class="page-header">PRO: Set Up API Server</h2>
@@ -171,8 +171,7 @@
       must be placed in a public directory.
     </li>
     <li>
-      Find the file <code>/includes/bootloader.php</code>, and insert your Xbox LIVE login details in the <code>XBOX_EMAIL</code>,
-      <code>XBOX_PASSWORD</code>, and <code>XBOX_GAMERTAG</code> constants.
+      Find the file <code>/includes/bootloader.php</code>, and insert your Xbox LIVE login details in the <code>$accounts</code> array. Multiple accounts can be used.
     </li>
     <li>Check out the <a href="../examples/">examples</a> to start using the API!</li>
   </ol>
