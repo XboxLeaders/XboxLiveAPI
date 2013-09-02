@@ -110,7 +110,6 @@
             <span id="mashape-button" data-api="xboxleadersapi" data-name="xboxleaders" data-icon="1"></span>
             <script src="https://www.mashape.com/embed/button.js"></script>
           </div>
-          </div>
           <div class="shameless-self-promotion">
             <a href="https://github.com/XboxLeaders/XboxLiveApi"
                onClick="_gaq.push(['_trackEvent', 'Outbound Link', 'View Project on GitHub']);">
