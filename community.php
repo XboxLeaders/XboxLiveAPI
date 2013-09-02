@@ -119,7 +119,7 @@
         <a href="https://twitter.com/xboxleaders" class="twitter-follow-button" data-link-color="#0069D6" data-show-count="true">Follow @xboxleaders</a>
       </li>
       <li class="tweet-btn hidden-phone">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text="XboxLeaders, A simple and powerful REST API for Xbox LIVE" data-counturl="http://xboxleaders.github.com/XboxLiveApi" data-count="horizontal" data-via="xboxleaders" data-related="jasonclemons:Creator & Developer of XboxLeaders">Tweet</a>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text="XboxLeaders, A simple and powerful REST API for Xbox LIVE" data-counturl="https://www.xboxleaders.com" data-count="horizontal" data-via="xboxleaders" data-related="jasonclemons:Creator & Developer of XboxLeaders">Tweet</a>
       </li>
     </ul>
   </div>
@@ -265,25 +265,18 @@
     community. If you'd like, here are a couple of ways you can tell me thanks for all my hard work.
   </p>
   <div class="row">
-    <div class="span4">
-      <h3><a href="https://www.gittip.com/jasonclemons/"><i class="icon-gittip"></i> Tip me on Gittip</a></h3>
-      <p>
-        Gittip is a great way to let developers know you appreciate their work.
-      </p>
+    <div class="span6">
+      <h3><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6" target="_blank">Donate via PayPal</a></h3>
+      Or even just 
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6" target="_blank">donate via PayPal</a>.
     </div>
-    <div class="span4">
+    <div class="span6">
       <h3><a href="http://amzn.com/w/3MA0C6FQPCUEX" target="_blank">My Amazon Wish List</a></h3>
       <p>
         Or pick something straight
         from <a href="http://amzn.com/w/3MA0C6FQPCUEX" target="_blank">my wish list</a>. Gift cards are great.
       </p>
     </div>
-    <div class="span4">
-      <h3><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6" target="_blank">Donate via PayPal</a></h3>
-      Or even just 
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6" target="_blank">donate via PayPal</a>.
-    </div>
-
   </div>
 </section>
 

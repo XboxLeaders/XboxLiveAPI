@@ -107,18 +107,16 @@
           <h1>Xbox Live API</h1>
           <p>Simple & Powerful REST API For Xbox LIVE</p>
           <div class="actions">
-            <a class="btn btn-primary btn-large" href="https://github.com/XboxLeaders/XboxLiveAPI/zipball/master"
-               onClick="_gaq.push(['_trackEvent', 'Outbound Link', 'Download on GitHub']);">
-              <i class="icon-download-alt icon-large"></i>&nbsp;&nbsp;
-              Download
-            </a>
+            <span id="mashape-button" data-api="xboxleadersapi" data-name="xboxleaders" data-icon="1"></span>
+            <script src="https://www.mashape.com/embed/button.js"></script>
+          </div>
           </div>
           <div class="shameless-self-promotion">
             <a href="https://github.com/XboxLeaders/XboxLiveApi"
                onClick="_gaq.push(['_trackEvent', 'Outbound Link', 'View Project on GitHub']);">
               GitHub Project</a> &nbsp;&nbsp;&middot;&nbsp;&nbsp;
             Version 2.0 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
-            Created &amp; Maintained by <a href="http://twitter.com/jasonclemons">Jason Clemons</a>
+            Created &amp; Maintained by <a href="http://about.me/jasonclemons">Jason Clemons</a>
           </div>
         </div>
       </div>
