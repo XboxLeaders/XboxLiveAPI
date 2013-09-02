@@ -231,33 +231,6 @@
   </p>
 </section>
 
-
-<section id="thanks-to">
-  <h2 class="page-header">Thanks To</h2>
-  <div class="row">
-    <div class="span4">
-      <p>
-        Thanks to <a href="https://twitter.com/djekl">@djekl</a> and
-        <a href="https://xboxapi.com">xboxapi.com</a> for initial help,
-        review, advice, and being all around awesome.
-      </p>
-    </div>
-    <div class="span4">
-      <p>
-        Thanks to <a href="https://twitter.com/fontawesome">@fontawesome</a> and
-        <a href="https://twitter.com/davegandy">@davegandy</a> for designing the
-        documentation theme.
-      </p>
-    </div>
-    <div class="span4">
-      <p>
-        Thanks to <a href="http://linode.com">Linode.com</a> for providing the excellent
-        VPS hosting for this API to reside on. Awesome job!
-      </p>
-    </div>
-  </div>
-</section>
-
 <section id="tell-me-thanks">
   <h2 class="page-header">Tell Me Thanks</h2>
   <p class="lead">
