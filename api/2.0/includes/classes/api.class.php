@@ -139,6 +139,7 @@ class API extends Base {
             $achievements['gamertag'] = $g = $json['Players'][0]['Gamertag'];
             $achievements['game'] = $this->clean($json['Game']['Name']);
             $achievements['id'] = $json['Game']['Id'];
+            $achievements['hid'] = dechex($json['Game']['Id']);
             $achievements['gamerscore']['current'] = $json['Game']['Progress'][$g]['Score'];
             $achievements['gamerscore']['total'] = $json['Game']['PossibleScore'];
             $achievements['achievement']['current'] = $json['Game']['Progress'][$g]['Achievements'];
@@ -256,6 +257,7 @@ class API extends Base {
             foreach($json['Games'] as $game) {
                 if($game['Progress'][$g]['LastPlayed'] !== 'null') {
                     $games['games'][$i]['id'] = $game['Id'];
+                    $games['games'][$i]['hid'] = dechex($game['Id']);
                     $games['games'][$i]['isapp'] = ($game['PossibleScore'] == 0) ? true : false;
                     $games['games'][$i]['title'] = $this->clean($game['Name']);
                     $games['games'][$i]['artwork']['small'] = 'http://download.xbox.com/content/images/66acd000-77fe-1000-9115-d802' . dechex($game['Id']) . '/1033/boxartsm.jpg';
