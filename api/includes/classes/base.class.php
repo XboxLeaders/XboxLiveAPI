@@ -564,5 +564,3 @@ function output_pretty_xml($mixed, $xml = false) {
         return str_repeat(' ', intval(strlen($a[1]) / 2) * 4) . "<";
     }, $dom->saveXML());
 }
-
-?>
