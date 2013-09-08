@@ -11,7 +11,8 @@
  * @license     http://opensource.org/licenses/mit-license.php The MIT License *
  *******************************************************************************/
 
-class Base {
+class Base
+{
     public $__cache;                 // cache model resource
 
     public $error;                   // error code
@@ -67,9 +68,12 @@ class Base {
     /*!
      * Construct the cache, runtime, and random ip address
      */
-    function __construct($cache) {
-        if($cache) $this->__cache = &$cache;
-        
+    public function __construct($cache)
+    {
+        if ($cache) {
+            $this->__cache =& $cache;
+        }
+
         $this->runtime = microtime(true);
         $this->ip = rand(60, 80) . '.' . rand(60, 140) . '.' . rand(80, 120) . '.' . rand(120, 200);
     }
@@ -77,11 +81,12 @@ class Base {
     /*!
      * Initiate the scraper
      */
-    public function init($email, $password) {
+    public function init($email, $password)
+    {
         $this->email = str_replace('@', '%40', strtolower($email));
         $this->password = $password;
 
-        if($this->check_login()) {
+        if ($this->check_login()) {
             $this->logged_in = true;
         } else {
             $this->perform_login();
@@ -91,7 +96,8 @@ class Base {
     /*!
      * Output the necessary headers
      */
-    public function output_headers() {
+    public function output_headers()
+    {
         header('Content-Type: application/' . str_replace('jsonp', 'javascript', $this->format) . '; charset=utf-8');
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Max-Age: 3628800');
@@ -100,8 +106,9 @@ class Base {
     /*!
      * Output the entire payload to the browser
      */
-    public function output_payload($data) {
-        if($this->version == '1.0') {
+    public function output_payload($data)
+    {
+        if ($this->version == '1.0') {
             $payload = array(
                 'Data' => $data,
                 'In' => round(microtime(true) - $this->runtime, 3),
@@ -114,7 +121,7 @@ class Base {
                 'status' => 'success',
                 'version' => $this->version,
                 'data' => $data,
-                'runtime' => round(microtime(true) - $this->runtime, 3) 
+                'runtime' => round(microtime(true) - $this->runtime, 3)
             );
         }
 
@@ -133,13 +140,14 @@ class Base {
     /*!
      * Output an error if one is found
      */
-    public function output_error($code) {
+    public function output_error($code)
+    {
         // output the response code
-        if(array_key_exists((int)$code, $this->errors)) {
-            http_response_code((int)$code);
+        if (array_key_exists((int) $code, $this->errors)) {
+            http_response_code((int) $code);
         }
 
-        if($this->version == '1.0') {
+        if ($this->version == '1.0') {
             $payload = array(
                 'Error' => $this->errors[$code],
                 'In' => round(microtime(true) - $this->runtime, 3),
@@ -155,7 +163,7 @@ class Base {
                     'code' => $code,
                     'message' => $this->errors[$code]
                 ),
-                'runtime' => round(microtime(true) - $this->runtime, 3) 
+                'runtime' => round(microtime(true) - $this->runtime, 3)
             );
         }
 
@@ -172,24 +180,10 @@ class Base {
     }
 
     /*!
-     * Saves access data to access log, if enabled
-     */
-    public function save_to_access($string) {
-        if($this->debug == true) {
-            $file = fopen($this->access_file, 'a+');
-            if(!$file) {
-                $this->error = 608;
-            } else {
-                fwrite($file, '[' . date('Y-m-d H:i:s') . '] (' . $this->version . ') ' . $string . "\n");
-                fclose($file);
-            }
-        }
-    }
-
-    /*!
      * Check culture code against Xbox's list of supported regions
      */
-    public function check_culture($code) {
+    public function check_culture($code)
+    {
         $valid_codes = array(
             'es-AR',	'en-AU',	'de-AT',	'nl-BE',
             'fr-BE',	'pt-BR',	'en-CA',	'fr-CA',
@@ -211,11 +205,12 @@ class Base {
     /*!
      * Perform the actual login to Xbox LIVE
      */
-    protected function perform_login() {
-        if(empty($this->email)) {
+    protected function perform_login()
+    {
+        if (empty($this->email)) {
             $this->error = 601;
             return false;
-        } else if(empty($this->password)) {
+        } elseif (empty($this->password)) {
             $this->error = 602;
             return false;
         } else {
@@ -232,15 +227,15 @@ class Base {
             $result = $this->fetch_url($url, 'http://www.xbox.com/en-US/');
 
             $this->stack_trace[] = array(
-                'url' => $url,
+                'url'      => $url,
                 'postdata' => '',
-                'result' => $result
+                'result'   => $result
             );
 
             $this->add_cookie('.login.live.com', 'WLOpt', 'act=[1]', time() + (60*60*24*365));
             $this->add_cookie('.login.live.com', 'CkTst', 'G' . time(), '/', time() + (60*60*24*365));
 
-            $url = $this->find($result, 'urlPost:\'', '\',');
+            $url  = $this->find($result, 'urlPost:\'', '\',');
             $PPFT = $this->find($result, 'name="PPFT" id="i0327" value="', '"');
             $PPSX = $this->find($result, 'srf_sRBlob=\'', '\';');
 
@@ -251,18 +246,18 @@ class Base {
             $result = $this->fetch_url($url, 'https://login.live.com/login.srf', null, $post_data);
 
             $this->stack_trace[] = array(
-                'url' => $url,
+                'url'       => $url,
                 'post_data' => $post_data,
-                'result' => $result
+                'result'    => $result
             );
 
             $this->add_cookie('.live.com', 'wlidperf', 'throughput=3&latency=961&FR=L&ST=1297790188859', '/', time() + (60*60*24*365));
             $this->add_cookie('login.live.com', 'CkTst', time(), '/ppsecure/', time() + (60*60*24*365));
 
-            $url = $this->find($result, 'id="fmHF" action="', '"');
-            $NAP = $this->find($result, 'id="NAP" value="', '"');
+            $url  = $this->find($result, 'id="fmHF" action="', '"');
+            $NAP  = $this->find($result, 'id="NAP" value="', '"');
             $ANON = $this->find($result, 'id="ANON" value="', '"');
-            $t = $this->find($result, 'id="t" value="', '"');
+            $t    = $this->find($result, 'id="t" value="', '"');
 
             $this->add_cookie('.xbox.com', 'ANON', $ANON, '/', time() + (60*60*24*365));
             $this->add_cookie('.xbox.com', 'NAP', $NAP, '/', time() + (60*60*24*365));
@@ -271,21 +266,19 @@ class Base {
             $result = $this->fetch_url($url, '', 16, $post_data);
 
             $this->stack_trace[] = array(
-                'url' => $url,
+                'url'       => $url,
                 'post_data' => $post_data,
-                'result' => $result
+                'result'    => $result
             );
 
             $result = $this->fetch_url('http://www.xbox.com/en-US/');
 
-            if(stripos($result, 'currentUser.isSignedIn = true') !== false) {
+            if (stripos($result, 'currentUser.isSignedIn = true') !== false) {
                 $this->logged_in = true;
-
                 return true;
             } else {
                 $this->error = 600;
                 $this->save_stack_trace();
-
                 return false;
             }
         }
@@ -294,22 +287,20 @@ class Base {
     /*!
      * Check the current session to see if it's logged in
      */
-    protected function check_login() {
-        if(file_exists($this->cookie_file)) {
-            if(time() - filemtime($this->cookie_file) >= 3600 || filesize($this->cookie_file) == 0) {
+    protected function check_login()
+    {
+        if (file_exists($this->cookie_file)) {
+            if (time() - filemtime($this->cookie_file) >= 3600 || filesize($this->cookie_file) == 0) {
                 $this->empty_cookie_file();
                 $this->logged_in = false;
-
                 return false;
             } else {
                 $this->logged_in = true;
-
                 return true;
             }
         } else {
             $this->empty_cookie_file();
             $this->logged_in = false;
-
             return false;
         }
     }
@@ -317,12 +308,13 @@ class Base {
     /*!
      * Force a new login session
      */
-    protected function force_new_login() {
+    protected function force_new_login()
+    {
         $this->empty_cookie_file();
         $this->logged_in = false;
         $this->perform_login();
 
-        if($this->logged_in) {
+        if ($this->logged_in) {
             return true;
         }
 
@@ -332,18 +324,19 @@ class Base {
     /*!
      * Perform the actual HTTP request
      */
-    protected function fetch_url($url, $referer = '', $timeout = null, $post_data = null, $headers = null) {
-        if($this->redirects > 4) {
+    protected function fetch_url($url, $referer = '', $timeout = null, $post_data = null, $headers = null)
+    {
+        if ($this->redirects > 4) {
             $this->error = 606;
             return false;
         }
 
         $ip = array(
-            'REMOTE_ADDR: ' . $this->ip, 
+            'REMOTE_ADDR: ' . $this->ip,
             'HTTP_X_FORWARDED_FOR: ' . $this->ip
         );
 
-        if($headers) {
+        if ($headers) {
             $headers = array_merge($ip, $headers);
         } else {
             $headers = $ip;
@@ -362,11 +355,11 @@ class Base {
         curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
         curl_setopt($ch, CURLOPT_AUTOREFERER, true);
 
-        if(!empty($referer)) {
+        if (!empty($referer)) {
             curl_setopt($ch, CURLOPT_REFERER, $referer);
         }
 
-        if(!empty($post_data)) {
+        if (!empty($post_data)) {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         }
@@ -374,42 +367,40 @@ class Base {
         $result = curl_exec($ch);
 
         // checking for redirects
-        if(stripos($result, '<title>Object moved</title>') !== false) {
+        if (stripos($result, '<title>Object moved</title>') !== false) {
             $follow = urldecode(trim($this->find($result, '<a href="', '">')));
 
-            if(substr($follow, 0, 1) == '/') {
+            if (substr($follow, 0, 1) == '/') {
                 $this->redirects++;
                 $result = $this->fetch_url('http://live.xbox.com' . $follow, $url);
             } else {
                 $this->redirects++;
                 $result = $this->fetch_url($follow, $url);
             }
-        }
-        // for some reason, there's an error and we cannot continue...
-        else if(stripos($result, '<!-------Error Info') !== false) {
+        } else if (stripos($result, '<!-------Error Info') !== false) {
+            // for some reason, there's an error and we cannot continue...
             $this->force_new_login();
 
-            if($this->logged_in) {
+            if ($this->logged_in) {
                 $this->redirects++;
                 $result = $this->fetch_url($url, $referer);
             } else {
                 $this->error = 600;
+
                 return false;
             }
-        }
-        // if we get stopped to agree to a new ToU, accept it
-        else if(stripos($result, 'UserAcceptsNewTermsOfUse') !== false) {
+        } else if (stripos($result, 'UserAcceptsNewTermsOfUse') !== false) {
+            // if we get stopped to agree to a new ToU, accept it
             $follow = 'https://live.xbox.com' . $this->find($result, '<form action="', '" method="post">');
-            $token = $this->find($result, '<input name="__RequestVerificationToken" type="hidden" value="', '" />');
-            $post = 'UserAcceptsNewTermsOfUse=true&__RequestVerificationToken=' . urlencode($token);
-
+            $token  = $this->find($result, '<input name="__RequestVerificationToken" type="hidden" value="', '" />');
+            $post   = 'UserAcceptsNewTermsOfUse=true&__RequestVerificationToken=' . urlencode($token);
             $result = $this->fetch_url($follow, $url, null, $post);
             $result = $this->fetch_url($url, $referer, $timeout, $post_data, $headers);
         } else {
             $this->save_to_debug('Loaded URL: ' . $url);
         }
 
-        if(!$result) {
+        if (!$result) {
             $this->error = 607;
             return false;
         }
@@ -422,12 +413,14 @@ class Base {
     /*!
      * Find a given string inside a string
      */
-    protected function find($haystack, $start, $finish) {
-        if(!empty($haystack)) {
+    protected function find($haystack, $start, $finish)
+    {
+        if (!empty($haystack)) {
             $s = explode($start, $haystack);
-            if(!empty($s[1])) {
+
+            if (!empty($s[1])) {
                 $s = explode($finish, $s[1]);
-                if(!empty($s[0])) {
+                if (!empty($s[0])) {
                     return $s[0];
                 }
             }
@@ -440,15 +433,16 @@ class Base {
      * Clean a response from the server. Converts everything to UTF-8,
      * and cleans HTML characters.
      */
-    protected function clean($string) {
-        if($this->format == 'xml') {
+    protected function clean($string)
+    {
+        if ($this->format == 'xml') {
             return $string;
         }
 
         $string = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
         $string = htmlentities($string, ENT_QUOTES, 'UTF-8');
 
-        if(function_exists('mb_convert_encoding')) {
+        if (function_exists('mb_convert_encoding')) {
             $string = mb_convert_encoding($string, 'UTF-8');
         } else {
             $string = utf8_decode($string);
@@ -460,9 +454,11 @@ class Base {
     /*!
      * Add cookie data to the cookie jar
      */
-    protected function add_cookie($domain, $name, $value, $path = '/', $expires = 0) {
+    protected function add_cookie($domain, $name, $value, $path = '/', $expires = 0)
+    {
         $file = fopen($this->cookie_file, 'a');
-        if(!$file) {
+
+        if (!$file) {
             $this->error = 603;
         } else {
             fwrite($file, $domain . '	TRUE	' . $path . '	FALSE	' . $expires . '	' . $name . '	' . $value . "\r\n");
@@ -473,22 +469,41 @@ class Base {
     /*!
      * Clear the entire cookie jar, because momma's making a new batch ;)
      */
-    protected function empty_cookie_file() {
+    protected function empty_cookie_file()
+    {
         $this->logged_in = false;
 
-        if(file_exists($this->cookie_file)) {
+        if (file_exists($this->cookie_file)) {
             $f = fopen($this->cookie_file, 'w');
             fclose($f);
         }
     }
 
     /*!
+     * Saves access data to access log, if enabled
+     */
+    public function save_to_access($string)
+    {
+        if ($this->debug) {
+            $file = fopen($this->access_file, 'a+');
+            if (!$file) {
+                $this->error = 608;
+            } else {
+                fwrite($file, '[' . date('Y-m-d H:i:s') . '] (' . $this->version . ') ' . $string . "\n");
+                fclose($file);
+            }
+        }
+    }
+
+    /*!
      * Save items to the debug log
      */
-    protected function save_to_debug($string) {
-        if($this->debug == true) {
+    protected function save_to_debug($string)
+    {
+        if ($this->debug) {
             $file = fopen($this->debug_file, 'a+');
-            if(!$file) {
+
+            if (!$file) {
                 $this->error = 604;
             } else {
                 fwrite($file, '[' . date('Y-m-d H:i:s') . '] (' . $this->version . ') ' . $string . "\n");
@@ -500,10 +515,11 @@ class Base {
     /*!
      * Save a stack trace to the stack trace log
      */
-    protected function save_stack_trace() {
-        if($this->debug == true) {
+    protected function save_stack_trace()
+    {
+        if ($this->debug) {
             $file = fopen($this->stack_trace_file, 'w');
-            if(!$file) {
+            if (!$file) {
                 $this->error = 605;
             } else {
                 fwrite($file, print_r($this->stack_trace, true));
@@ -513,35 +529,47 @@ class Base {
     }
 }
 
-function output_pretty_php($php) {
+function output_pretty_php($php)
+{
     return serialize($php);
 }
 
-function output_pretty_json($json) {
-    return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+function output_pretty_json($json)
+{
+    if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+        return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    } else {
+        return json_encode($json);
+    }
 }
 
 /*!
  * Not pretty, but it works. Outputs JSONP callback function.
  */
-function output_pretty_jsonp($json, $callback) {
-    return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+function output_pretty_jsonp($json, $callback)
+{
+    if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+        return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+    } else {
+        return $callback . '(' . json_encode($json) . ');';
+    }
 }
 
 /*!
  * See: http://stackoverflow.com/questions/1397036/how-to-convert-array-to-simplexml
  */
-function output_pretty_xml($mixed, $xml = false) {
-    if($xml === false) {
+function output_pretty_xml($mixed, $xml = false)
+{
+    if (!$xml) {
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><xbox status="' . (empty($mixed['status']) ? $mixed['Stat'] : $mixed['status']) . '" version="' . (empty($mixed['version']) ? '1.0' : $mixed['version']) . '" />');
     }
 
-    foreach($mixed as $key => $value) {
-        if(is_numeric($key)) {
+    foreach ($mixed as $key => $value) {
+        if (is_numeric($key)) {
             $key = rtrim($xml->getName(), 's');
         }
 
-        if(is_array($value)) {
+        if (is_array($value)) {
             output_pretty_xml($value, $xml->addChild($key));
         } else {
             $xml->addChild($key, $value);
@@ -552,9 +580,7 @@ function output_pretty_xml($mixed, $xml = false) {
     $dom->preserveWhiteSpace = false;
     $dom->formatOutput = true;
 
-    return preg_replace_callback('/^( +)</m', function($a) { 
-        return str_repeat(' ', intval(strlen($a[1]) / 2) * 4) . "<";  
+    return preg_replace_callback('/^( +)</m', function($a) {
+        return str_repeat(' ', intval(strlen($a[1]) / 2) * 4) . "<";
     }, $dom->saveXML());
 }
-
-?>
