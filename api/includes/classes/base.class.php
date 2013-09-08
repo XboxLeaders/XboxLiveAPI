@@ -69,7 +69,7 @@ class Base {
      */
     function __construct($cache) {
         if($cache) $this->__cache = &$cache;
-        
+
         $this->runtime = microtime(true);
         $this->ip = rand(60, 80) . '.' . rand(60, 140) . '.' . rand(80, 120) . '.' . rand(120, 200);
     }
@@ -114,7 +114,7 @@ class Base {
                 'status' => 'success',
                 'version' => $this->version,
                 'data' => $data,
-                'runtime' => round(microtime(true) - $this->runtime, 3) 
+                'runtime' => round(microtime(true) - $this->runtime, 3)
             );
         }
 
@@ -155,7 +155,7 @@ class Base {
                     'code' => $code,
                     'message' => $this->errors[$code]
                 ),
-                'runtime' => round(microtime(true) - $this->runtime, 3) 
+                'runtime' => round(microtime(true) - $this->runtime, 3)
             );
         }
 
@@ -339,7 +339,7 @@ class Base {
         }
 
         $ip = array(
-            'REMOTE_ADDR: ' . $this->ip, 
+            'REMOTE_ADDR: ' . $this->ip,
             'HTTP_X_FORWARDED_FOR: ' . $this->ip
         );
 
@@ -518,14 +518,22 @@ function output_pretty_php($php) {
 }
 
 function output_pretty_json($json) {
-    return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+        return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    } else {
+        return json_encode($json);
+    }
 }
 
 /*!
  * Not pretty, but it works. Outputs JSONP callback function.
  */
 function output_pretty_jsonp($json, $callback) {
-    return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+    if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+        return $callback . '(' . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+    } else {
+        return $callback . '(' . json_encode($json) . ');';
+    }
 }
 
 /*!
@@ -552,8 +560,8 @@ function output_pretty_xml($mixed, $xml = false) {
     $dom->preserveWhiteSpace = false;
     $dom->formatOutput = true;
 
-    return preg_replace_callback('/^( +)</m', function($a) { 
-        return str_repeat(' ', intval(strlen($a[1]) / 2) * 4) . "<";  
+    return preg_replace_callback('/^( +)</m', function($a) {
+        return str_repeat(' ', intval(strlen($a[1]) / 2) * 4) . "<";
     }, $dom->saveXML());
 }
 
