@@ -190,9 +190,11 @@ class API extends Base {
                 if(!empty($achievement['EarnDates'][$g]['EarnedOn'])) {
                     $achievements['achievements'][$i]['unlocked'] = true;
                     $achievements['achievements'][$i]['unlockdate'] = (int)substr(str_replace(array('/Date(', ')/'), '', $achievement['EarnDates'][$g]['EarnedOn']), 0, 10);
+                    $achievements['achievements'][$i]['unlockedoffline'] = ($achievements['achievements'][$i]['unlockedate'] == -684780120) ? true : false;
                 } else {
                     $achievements['achievements'][$i]['unlocked'] = false;
                     $achievements['achievements'][$i]['unlockdate'] = null;
+                    $achievements['achievements'][$i]['unlockedoffline'] = null;
                 }
                 
                 $i++;
