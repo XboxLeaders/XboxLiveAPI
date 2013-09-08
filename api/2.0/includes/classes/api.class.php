@@ -52,11 +52,10 @@ class API extends Base {
             $user['avatar']['tile'] = trim(str_replace('https://avatar-ssl', 'http://avatar', $this->find($data, '<img class="gamerpic" src="', '" alt="')));
             $user['gamerscore'] = (int)trim($this->find($data, '<div class="gamerscore">', '</div>'));
             $user['reputation'] = 0;
-            $user['presence'] = trim(str_replace("\r\n", ' - ', trim($this->find($data, '<div class="presence">', '</div>'))));
-            $user['online'] = (empty($user['presence'])
-                or (strpos($user['presence'], 'Last seen') !== false)
+            $user['presence'] = trim(str_replace("\r\n", ' - ', $this->find($data, '<div class="presence">', '</div>')));
+            $user['online'] = ((strpos($user['presence'], 'Last seen') !== false)
                 or (strpos($user['presence'], 'Offline') !== false)
-                or (trim(strpos($user['presence'], '') !== false))) ? false : true;
+                or (strpos($user['presence'], '') !== false)) ? false : true;
             $user['gamertag'] = str_replace(array('&#39;s Profile', '\'s Profile'), '', trim($this->find($data, '<h1 class="pageTitle">', '</h1>')));
             $user['motto'] = $this->clean(trim(strip_tags($this->find($data, '<div class="motto">', '</div>'))));
             $user['name'] = trim(strip_tags($this->find($data, '<div class="name" title="', '">')));
@@ -64,7 +63,13 @@ class API extends Base {
             $user['biography'] = trim(strip_tags(str_replace('<label>Bio:</label>', '', trim($this->find($data, '<div class="bio">', '</div>')))));
             
             $recent_games = $this->fetch_games($gamertag, $region);
-            $user['recentactivity'] = array($recent_games['games'][0], $recent_games['games'][1], $recent_games['games'][2], $recent_games['games'][3], $recent_games['games'][4]);
+            for($i = 0; $i < 5; $i++) {
+                if($recent_games['games'][$i] == null) {
+                    break;
+                }
+
+                $user['recentactivity'][$i] = $recent_games['games'][$i];
+            }
 
             if (strpos($data, '<div class="badges">') !== false) {
                 if (strpos($data, 'xbox360Badge') !== false) {
@@ -266,7 +271,7 @@ class API extends Base {
                     $games['achievements']['current'] = $games['achievements']['current'] + $games['games'][$i]['achievements']['current'];
                     $games['achievements']['total'] = $games['achievements']['total'] + $games['games'][$i]['achievements']['total'];
 
-                    if($game['Progress'][$g]['Achievements'] !== 0) {
+                    if($game['Progress'][$g]['Achievements'] !== 0 && $game['isapp'] !== false) {
                         $games['games'][$i]['progress'] = round((($game['Progress'][$g]['Achievements'] / $game['PossibleAchievements']) * 100), 1);
                     }
 
