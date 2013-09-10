@@ -3,7 +3,7 @@
  * XboxLeaders Xbox LIVE REST API                                              *
  * =========================================================================== *
  * @file        bootloader.php                                                 *
- * @package     XboxLiveApi                                                    *
+ * @package     XboxLiveAPI                                                    *
  * @version     2.0                                                            *
  * @copyright   (c) 2013 - Jason Clemons <me@jasonclemons.me>                  *
  * @contributor Alan Wynn <http://github.com/djekl>                            *
@@ -22,6 +22,7 @@ define('CACHE_ENGINE', 'apc');
 
 /*!
  * Define the account details.
+ * You can add multiple accounts, or just one.
  */
 $accounts = array(
     array(
