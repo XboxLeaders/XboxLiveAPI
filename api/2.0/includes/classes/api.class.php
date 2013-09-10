@@ -338,10 +338,11 @@ class API extends Base
                 $friends['friends'][$i]['status']            = $friend['Presence'];
                 $friends['friends'][$i]['lastseen']          = (int)substr($friend['LastSeen'], 6, 10);
                 $friends['total']                            = $friends['total']++;
-                $friends['totaloffline']                     = $friends['totaloffline']++;
 
                 if ($friend['IsOnline']) {
                     $friends['totalonline'] = $friends['totalonline']++;
+                } else {
+                    $friends['totaloffline'] = $friends['totaloffline']++;
                 }
 
                 $i++;
