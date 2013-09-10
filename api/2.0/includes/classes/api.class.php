@@ -3,7 +3,7 @@
  * XboxLeaders Xbox LIVE REST API                                              *
  * =========================================================================== *
  * @file        api.class.php                                                  *
- * @package     XboxLiveApi                                                    *
+ * @package     XboxLiveAPI                                                    *
  * @version     2.0                                                            *
  * @copyright   (c) 2013 - Jason Clemons <me@jasonclemons.me>                  *
  * @contributor Alan Wynn <http://github.com/djekl>                            *
@@ -21,9 +21,9 @@ class API extends Base
     /**
      * Fetch profile information
      *
-     * @access		public
-     * @var			string		gamertag
-     * @var			string		region
+     * @access public
+     * @var    string $gamertag
+     * @var    string $region
      * @return array
      */
     public function fetch_profile($gamertag, $region)
@@ -34,7 +34,7 @@ class API extends Base
 
         $data = $this->__cache->fetch($key);
         if (!$data) {
-            $data = $this->fetch_url($url);
+            $data      = $this->fetch_url($url);
             $freshness = 'new';
             $this->__cache->store($key, $data, 3600);
         } else {
@@ -43,26 +43,24 @@ class API extends Base
 
         if (stripos($data, '<section class="contextRail custom">')) {
             $user = array();
-            $user['gamertag'] = trim($gamertag);
-            $user['tier'] = (strpos($data, '<div class="goldBadge">') !== false) ? 'gold' : 'silver';
-            $user['badges']['xboxlaunchteam'] = false;
-            $user['badges']['nxelaunchteam'] = false;
+            $user['gamertag']                   = trim($gamertag);
+            $user['tier']                       = (strpos($data, '<div class="goldBadge">') !== false) ? 'gold' : 'silver';
+            $user['badges']['xboxlaunchteam']   = false;
+            $user['badges']['nxelaunchteam']    = false;
             $user['badges']['kinectlaunchteam'] = false;
-            $user['avatar']['full'] = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatar-body.png';
-            $user['avatar']['small'] = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-s.png';
-            $user['avatar']['large'] = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-l.png';
-            $user['avatar']['tile'] = trim(str_replace('https://avatar-ssl', 'http://avatar', $this->find($data, '<img class="gamerpic" src="', '" alt="')));
-            $user['gamerscore'] = (int) trim($this->find($data, '<div class="gamerscore">', '</div>'));
-            $user['reputation'] = 0;
-            $user['presence'] = trim(str_replace("\r\n", ' - ', $this->find($data, '<div class="presence">', '</div>')));
-            $user['online'] = ((strpos($user['presence'], 'Last seen') !== false)
-                or (strpos($user['presence'], 'Offline') !== false)
-                or (strpos($user['presence'], ' ') !== false)) ? false : true;
-            $user['gamertag'] = str_replace(array('&#39;s Profile', '\'s Profile'), '', trim($this->find($data, '<h1 class="pageTitle">', '</h1>')));
-            $user['motto'] = $this->clean(trim(strip_tags($this->find($data, '<div class="motto">', '</div>'))));
-            $user['name'] = trim(strip_tags($this->find($data, '<div class="name" title="', '">')));
-            $user['location'] = trim(strip_tags(str_replace('<label>Location:</label>', '', trim($this->find($data, '<div class="location">', '</div>')))));
-            $user['biography'] = trim(strip_tags(str_replace('<label>Bio:</label>', '', trim($this->find($data, '<div class="bio">', '</div>')))));
+            $user['avatar']['full']             = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatar-body.png';
+            $user['avatar']['small']            = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-s.png';
+            $user['avatar']['large']            = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-l.png';
+            $user['avatar']['tile']             = trim(str_replace('https://avatar-ssl', 'http://avatar', $this->find($data, '<img class="gamerpic" src="', '" alt="')));
+            $user['gamerscore']                 = (int) trim($this->find($data, '<div class="gamerscore">', '</div>'));
+            $user['reputation']                 = 0;
+            $user['presence']                   = trim(str_replace("\r\n", ' - ', $this->find($data, '<div class="presence">', '</div>')));
+            $user['online']                     = ((strpos($user['presence'], 'Last seen') !== false) or (strpos($user['presence'], 'Offline') !== false) or (strpos($user['presence'], ' ') !== false)) ? false : true;
+            $user['gamertag']                   = str_replace(array('&#39;s Profile', '\'s Profile'), '', trim($this->find($data, '<h1 class="pageTitle">', '</h1>')));
+            $user['motto']                      = $this->clean(trim(strip_tags($this->find($data, '<div class="motto">', '</div>'))));
+            $user['name']                       = trim(strip_tags($this->find($data, '<div class="name" title="', '">')));
+            $user['location']                   = trim(strip_tags(str_replace('<label>Location:</label>', '', trim($this->find($data, '<div class="location">', '</div>')))));
+            $user['biography']                  = trim(strip_tags(str_replace('<label>Bio:</label>', '', trim($this->find($data, '<div class="bio">', '</div>')))));
 
             $recent_games = $this->fetch_games($gamertag, $region);
             for ($i = 0; $i < 5; $i++) {
@@ -117,10 +115,10 @@ class API extends Base
     /**
      * Fetch achievement information for a specific game
      *
-     * @access		public
-     * @var			string		gamertag
-     * @var			int			gameid
-     * @var			string		region
+     * @access public
+     * @var    string $gamertag
+     * @var    int    $gameid
+     * @var    string $region
      * @return array
      */
     public function fetch_achievements($gamertag, $gameid, $region)
@@ -171,13 +169,13 @@ class API extends Base
                 if (!$achievement['IsHidden']) {
                     // find colored achievement tile
                     // get image name. removes url and extension
-                    $ach_info = pathinfo($achievement['TileUrl']);
+                    $ach_info  = pathinfo($achievement['TileUrl']);
                     // decode image name
-                    $ach_str1 = base64_decode($ach_info['filename']);
+                    $ach_str1  = base64_decode($ach_info['filename']);
                     // remove everything before /ach
-                    $ach_str2 = strstr($ach_str1, '/ach');
+                    $ach_str2  = strstr($ach_str1, '/ach');
                     // subtract last 12 spaces and/or whitespace from string
-                    $ach_str3 = substr($ach_str2, 0, -11);
+                    $ach_str3  = substr($ach_str2, 0, -11);
                     // create color tile source
                     $ach_color = 'https://image-ssl.xboxlive.com/global/t.' . dechex($json['Game']['Id']) . $ach_str3;
 
@@ -222,9 +220,9 @@ class API extends Base
     /**
      * Fetch information about played games
      *
-     * @access		public
-     * @var			string		gamertag
-     * @var			string		region
+     * @access public
+     * @var    string $gamertag
+     * @var    string $region
      * @return array
      */
     public function fetch_games($gamertag, $region)
@@ -300,9 +298,9 @@ class API extends Base
     /**
      * Fetch data about a players' friends list
      *
-     * @access		public
-     * @var			string		gamertag
-     * @var			string		region
+     * @access public
+     * @var    string $gamertag
+     * @var    string $region
      * @return array
      */
     public function fetch_friends($gamertag, $region)
@@ -362,9 +360,9 @@ class API extends Base
     /**
      * Fetch data for a search query
      *
-     * @access		public
-     * @var			string		query
-     * @var			string		region
+     * @access public
+     * @var    string $query
+     * @var    string $region
      * @return array
      */
     public function fetch_search($query, $region)
