@@ -44,8 +44,11 @@ $accounts = array(
 /*!
  * Pick a random email to login
  */
-$id = rand(0, (count($accounts) - 1));
-$account = $accounts[$id];
+$account = $accounts[0];
+if (count($accounts) > 1) {
+    $id      = rand(0, (count($accounts) - 1));
+    $account = $accounts[$id];
+}
 
 /*!
  * Define the account credentials
@@ -66,5 +69,3 @@ define('ACCESS_FILE', '../includes/logs/access.log');                // path to 
  * Initiate the caching engine.
  */
 $cache = new Cache(CACHE_ENGINE);
-
-?>
