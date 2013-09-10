@@ -275,7 +275,7 @@ class API extends Base {
                     $games['achievements']['current'] = $games['achievements']['current'] + $games['games'][$i]['achievements']['current'];
                     $games['achievements']['total'] = $games['achievements']['total'] + $games['games'][$i]['achievements']['total'];
 
-                    if($game['Progress'][$g]['Achievements'] !== 0 && $game['isapp'] !== false) {
+                    if($game['Progress'][$g]['Achievements'] !== 0 && $games['games'][$i]['isapp'] !== false) {
                         $games['games'][$i]['progress'] = round((($game['Progress'][$g]['Achievements'] / $game['PossibleAchievements']) * 100), 1);
                     }
 
