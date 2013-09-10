@@ -3,7 +3,7 @@
  * XboxLeaders Xbox LIVE REST API                                              *
  * =========================================================================== *
  * @file        index.php                                                      *
- * @package     XboxLiveApi                                                    *
+ * @package     XboxLiveAPI                                                    *
  * @version     2.0                                                            *
  * @copyright   (c) 2013 - Jason Clemons <me@jasonclemons.me>                  *
  * @contributor Alan Wynn <http://github.com/djekl>                            *
@@ -13,8 +13,8 @@
 
 include('../includes/bootloader.php');
 include('includes/kernel.php');
-$api->output_headers();
 
+$api->output_headers();
 echo $api->output_error(304);
 
 ?>
