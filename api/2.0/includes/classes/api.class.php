@@ -55,7 +55,7 @@ class API extends Base {
             $user['presence'] = trim(str_replace("\r\n", ' - ', $this->find($data, '<div class="presence">', '</div>')));
             $user['online'] = ((strpos($user['presence'], 'Last seen') !== false)
                 or (strpos($user['presence'], 'Offline') !== false)
-                or (strpos($user['presence'], '') !== false)) ? false : true;
+                or (strpos($user['presence'], ' ') !== false)) ? false : true;
             $user['gamertag'] = str_replace(array('&#39;s Profile', '\'s Profile'), '', trim($this->find($data, '<h1 class="pageTitle">', '</h1>')));
             $user['motto'] = $this->clean(trim(strip_tags($this->find($data, '<div class="motto">', '</div>'))));
             $user['name'] = trim(strip_tags($this->find($data, '<div class="name" title="', '">')));
