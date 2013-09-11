@@ -13,29 +13,25 @@
 
 class Base
 {
-    public $__cache;                 // cache model resource
-
-    public $error;                   // error code
-    public $stack_trace = array();   // stack trace array for logging
-    public $logged_in = false;       // flag indicating whether the current session is logged in
-    public $redirects = 0;           // number of current redirects, prevents infinite loops
-
-    public $email, $password;        // email/password of the scraper account
-    public $account_gamertag;        // the gamertag for the scraper account
-    public $debug = false;           // debug mode flag
-    public $timeout = 8;             // number of seconds to timeout session
-
-    public $cookie_file = '';        // cookie jar path
-    public $debug_file = '';         // debug file path
-    public $stack_trace_file = '';   // stack trace file path
-    public $access_file = '';        // access log file path
-
-    public $runtime = null;          // current runtime
-    public $ip = null;               // ip address to use for session, generated in __construct()
-    public $format = 'xml';          // default response format
-    public $version = null;          // current api version
-    public $offline = false;         // api offline
-    public $callback = 'foo';        // callback function for jsonp responses
+    public $__cache;                     // cache model resource
+    public $error;                       // error code
+    public $stack_trace       = array(); // stack trace array for logging
+    public $logged_in         = false;   // flag indicating whether the current session is logged in
+    public $redirects         = 0;       // number of current redirects, prevents infinite loops
+    public $email, $password;            // email/password of the scraper account
+    public $account_gamertag;            // the gamertag for the scraper account
+    public $debug             = false;   // debug mode flag
+    public $timeout           = 8;       // number of seconds to timeout session
+    public $cookie_file       = '';      // cookie jar path
+    public $debug_file        = '';      // debug file path
+    public $stack_trace_file  = '';      // stack trace file path
+    public $access_file       = '';      // access log file path
+    public $runtime           = null;    // current runtime
+    public $ip                = null;    // ip address to use for session, generated in __construct()
+    public $format            = 'xml';   // default response format
+    public $version           = null;    // current api version
+    public $offline           = false;   // api offline
+    public $callback          = 'foo';   // callback function for jsonp responses
 
     /*!
      * Error Codes
@@ -83,9 +79,11 @@ class Base
      */
     public function init($email, $password)
     {
+        // Email and password. Make sure it's URL-friendly.
         $this->email = str_replace('@', '%40', strtolower($email));
         $this->password = $password;
 
+        // Check the login session to make sure it's valid.
         if ($this->check_login()) {
             $this->logged_in = true;
         } else {
@@ -108,6 +106,7 @@ class Base
      */
     public function output_payload($data)
     {
+        //!!! Version 1.0 being deprecated soon!
         if ($this->version == '1.0') {
             $payload = array(
                 'Data' => $data,
@@ -125,6 +124,7 @@ class Base
             );
         }
 
+        // Output the data in the desired format.
         switch ($this->format) {
             case 'xml':
                 return output_pretty_xml($payload);
@@ -142,11 +142,12 @@ class Base
      */
     public function output_error($code)
     {
-        // output the response code
+        // Output the proper response code.
         if (array_key_exists((int) $code, $this->errors)) {
             http_response_code((int) $code);
         }
 
+        //!!! Version 1.0 being deprecated soon!
         if ($this->version == '1.0') {
             $payload = array(
                 'Error' => $this->errors[$code],
@@ -167,6 +168,7 @@ class Base
             );
         }
 
+        // Output the data in the desired format.
         switch ($this->format) {
             case 'xml':
                 return output_pretty_xml($payload);
@@ -214,6 +216,7 @@ class Base
             $this->error = 602;
             return false;
         } else {
+            // Make some cookies. We all like cookies. Microsoft just likes them more.
             $this->add_cookie('.xbox.com', 'MC0', time(), '/', time() + (60*60*24*365));
             $this->add_cookie('.xbox.com', 's_vi', '[CS]v1|26AD59C185011B4D-40000113004213F1[CE]', '/', time() + (60*60*24*365));
             $this->add_cookie('.xbox.com', 's_nr', '1297891791797', '/', time() + (60*60*24*365));
@@ -223,6 +226,7 @@ class Base
             $this->add_cookie('.xbox.com', 'xbox_info', 't=6', '/', time() + (60*60*24*365));
             $this->add_cookie('.xbox.com', 'PersistentId', '0a652e56e40f42caac3ac84fad02ed01', '/', time() + (60*60*24*365));
 
+            // Send the data to Xbox and retrieve the response.
             $url = 'https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=11&ct=' . time() . '&rver=6.0.5286.0&wp=MBI&wreply=https://live.xbox.com:443/xweb/live/passport/setCookies.ashx%3Frru%3Dhttp%253a%252f%252fwww.xbox.com%252fen-US%252f&flc=3d1033&lc=1033&cb=reason=0&returnUrl=http%253a%252f%252fwww.xbox.com%252fen-US%252f%253flc%253d1033&id=66262';
             $result = $this->fetch_url($url, 'http://www.xbox.com/en-US/');
 
@@ -232,16 +236,16 @@ class Base
                 'result'   => $result
             );
 
+            // More cookies...
             $this->add_cookie('.login.live.com', 'WLOpt', 'act=[1]', time() + (60*60*24*365));
             $this->add_cookie('.login.live.com', 'CkTst', 'G' . time(), '/', time() + (60*60*24*365));
 
+            // Find the right parameters. We need this data for the next request.
             $url  = $this->find($result, 'urlPost:\'', '\',');
             $PPFT = $this->find($result, 'name="PPFT" id="i0327" value="', '"');
             $PPSX = $this->find($result, 'srf_sRBlob=\'', '\';');
 
-            //$pwd_pad = "IfYouAreReadingThisYouHaveTooMuchFreeTime";
-            //$pwd_pad = substr($pwd_pad, 0, -(strlen($this->password)));
-
+            // Send the data back to Xbox and retrieve the response.
             $post_data = 'login=' . $this->email . '&passwd=' . $this->password . '&KMSI=1&mest=0&type=11&LoginOptions=3&PPSX=' . $PPSX . '&PPFT=' . $PPFT . '&idsbho=1&PwdPad=&sso=&i1=1&i2=1&i3=12035&i12=1&i13=1&i14=323&i15=3762&i18=__Login_Strings%7C1%2C__Login_Core%7C1%2C';
             $result = $this->fetch_url($url, 'https://login.live.com/login.srf', null, $post_data);
 
@@ -251,6 +255,7 @@ class Base
                 'result'    => $result
             );
 
+            // MOAR COOKIESSSSSSSS!!!
             $this->add_cookie('.live.com', 'wlidperf', 'throughput=3&latency=961&FR=L&ST=1297790188859', '/', time() + (60*60*24*365));
             $this->add_cookie('login.live.com', 'CkTst', time(), '/ppsecure/', time() + (60*60*24*365));
 
@@ -262,6 +267,7 @@ class Base
             $this->add_cookie('.xbox.com', 'ANON', $ANON, '/', time() + (60*60*24*365));
             $this->add_cookie('.xbox.com', 'NAP', $NAP, '/', time() + (60*60*24*365));
 
+            // OK, last time we send data to Xbox and retrieve the response.
             $post_data = 'NAPExp=' . date('c', mktime(date('H'), date('i'), date('s'), date('n') + 1)) . '&NAP=' . $NAP . '&ANONExp=' . date('c', mktime(date('H'), date('i'), date('s'), date('n') + 1)) . '&ANON=' . $ANON . '&t=' . $t;
             $result = $this->fetch_url($url, '', 16, $post_data);
 
@@ -273,6 +279,7 @@ class Base
 
             $result = $this->fetch_url('http://www.xbox.com/en-US/');
 
+            // Make sure we got signed in...
             if (stripos($result, 'currentUser.isSignedIn = true') !== false) {
                 $this->logged_in = true;
                 return true;
@@ -326,16 +333,19 @@ class Base
      */
     protected function fetch_url($url, $referer = '', $timeout = null, $post_data = null, $headers = null)
     {
+        // If we've been redirected too many times, end it.
         if ($this->redirects > 4) {
             $this->error = 606;
             return false;
         }
 
+        // Set up our fake IP's.
         $ip = array(
             'REMOTE_ADDR: ' . $this->ip,
             'HTTP_X_FORWARDED_FOR: ' . $this->ip
         );
 
+        // If we have headers to send, send them.
         if ($headers) {
             $headers = array_merge($ip, $headers);
         } else {
@@ -359,6 +369,7 @@ class Base
             curl_setopt($ch, CURLOPT_REFERER, $referer);
         }
 
+        // Are we POSTing?
         if (!empty($post_data)) {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
@@ -366,7 +377,7 @@ class Base
 
         $result = curl_exec($ch);
 
-        // checking for redirects
+        // Checking for redirects
         if (stripos($result, '<title>Object moved</title>') !== false) {
             $follow = urldecode(trim($this->find($result, '<a href="', '">')));
 
@@ -378,7 +389,7 @@ class Base
                 $result = $this->fetch_url($follow, $url);
             }
         } else if (stripos($result, '<!-------Error Info') !== false) {
-            // for some reason, there's an error and we cannot continue...
+            // For some reason, there's an error and we cannot continue...
             $this->force_new_login();
 
             if ($this->logged_in) {
@@ -390,7 +401,7 @@ class Base
                 return false;
             }
         } else if (stripos($result, 'UserAcceptsNewTermsOfUse') !== false) {
-            // if we get stopped to agree to a new ToU, accept it
+            // If we get stopped to agree to a new ToU, accept it.
             $follow = 'https://live.xbox.com' . $this->find($result, '<form action="', '" method="post">');
             $token  = $this->find($result, '<input name="__RequestVerificationToken" type="hidden" value="', '" />');
             $post   = 'UserAcceptsNewTermsOfUse=true&__RequestVerificationToken=' . urlencode($token);
@@ -529,11 +540,17 @@ class Base
     }
 }
 
+/**
+ * Output raw PHP data, but make it pretty.
+ */
 function output_pretty_php($php)
 {
     return serialize($php);
 }
 
+/**
+ * Output JSON data, but make it pretty!
+ */
 function output_pretty_json($json)
 {
     if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
