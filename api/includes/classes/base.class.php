@@ -577,7 +577,7 @@ function output_pretty_jsonp($json, $callback)
  */
 function output_pretty_xml($mixed, $xml = false)
 {
-    if (!$xml) {
+    if ($xml === false) {
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><xbox status="' . (empty($mixed['status']) ? $mixed['Stat'] : $mixed['status']) . '" version="' . (empty($mixed['version']) ? '1.0' : $mixed['version']) . '" />');
     }
 
