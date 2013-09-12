@@ -334,15 +334,15 @@ class API extends Base
                 $friends['friends'][$i]['gamerpic']['large'] = $friend['GamerTileUrl'];
                 $friends['friends'][$i]['gamerpic']['small'] = $friend['LargeGamerTileUrl'];
                 $friends['friends'][$i]['gamerscore']        = $friend['GamerScore'];
-                $friends['friends'][$i]['online']            = (bool)($friend['IsOnline'] == 1);
+                $friends['friends'][$i]['online']            = (bool)$friend['IsOnline'];
                 $friends['friends'][$i]['status']            = $friend['Presence'];
                 $friends['friends'][$i]['lastseen']          = (int)substr($friend['LastSeen'], 6, 10);
-                $friends['total']                            = $friends['total']++;
 
+                $friends['total']++;
                 if ($friend['IsOnline']) {
-                    $friends['totalonline'] = $friends['totalonline']++;
+                    $friends['totalonline']++;
                 } else {
-                    $friends['totaloffline'] = $friends['totaloffline']++;
+                    $friends['totaloffline']++;
                 }
 
                 $i++;
