@@ -34,5 +34,3 @@ if (!$api->logged_in) {
         }
     }
 }
-
-?>
