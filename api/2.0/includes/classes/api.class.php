@@ -198,7 +198,7 @@ class API extends Base
                 if (!empty($achievement['EarnDates'][$g]['EarnedOn'])) {
                     $achievements['achievements'][$i]['unlocked']        = true;
                     $achievements['achievements'][$i]['unlockdate']      = (int)substr($achievement['EarnDates'][$g]['EarnedOn'], 6, 10);
-                    $achievements['achievements'][$i]['unlockedoffline'] = isset($achievement['EarnDates'][$g]['IsOffline']);
+                    $achievements['achievements'][$i]['unlockedoffline'] = (bool)$achievement['EarnDates'][$g]['IsOffline'];
                 }
 
                 $i++;
