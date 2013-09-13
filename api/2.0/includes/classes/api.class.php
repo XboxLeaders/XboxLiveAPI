@@ -55,7 +55,7 @@ class API extends Base
             $user['gamerscore']                 = (int) trim($this->find($data, '<div class="gamerscore">', '</div>'));
             $user['reputation']                 = 0;
             $user['presence']                   = trim(str_replace("\r\n", ' - ', $this->find($data, '<div class="presence">', '</div>')));
-            $user['online']                     = (bool)(strpos($user['presence'], 'Online') !== false);
+            $user['online']                     = (bool)(strpos($user['presence'], 'Online') !== false && strpos($user['presence'], 'Online Status Unavailable') === false);
             $user['gamertag']                   = str_replace(array('&#39;s Profile', '\'s Profile'), '', trim($this->find($data, '<h1 class="pageTitle">', '</h1>')));
             $user['motto']                      = $this->clean(trim(strip_tags($this->find($data, '<div class="motto">', '</div>'))));
             $user['name']                       = trim(strip_tags($this->find($data, '<div class="name" title="', '">')));
