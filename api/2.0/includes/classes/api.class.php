@@ -320,7 +320,7 @@ class API extends Base
 
         $json = json_decode($data, true);
 
-        if ($json['Data']['Friends'] != null) {
+        if (!empty($json['Data']) && $json['Data']['Friends'] != null) {
             $friends                 = array();
             $friends['total']        = 0;
             $friends['totalonline']  = 0;
