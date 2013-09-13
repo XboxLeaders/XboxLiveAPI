@@ -62,8 +62,12 @@ class API extends Base
             $user['location']                   = trim(strip_tags(str_replace('<label>Location:</label>', '', trim($this->find($data, '<div class="location">', '</div>')))));
             $user['biography']                  = trim(strip_tags(str_replace('<label>Bio:</label>', '', trim($this->find($data, '<div class="bio">', '</div>')))));
 
-            $recentactivity         = $this->fetch_games($gamertag, $region);
-            $user['recentactivity'] = array_slice($recentactivity['games'], 0, 5);
+            $recentactivity = $this->fetch_games($gamertag, $region);
+            if (is_array($recentactivity)) {
+                $user['recentactivity'] = array_slice($recentactivity['games'], 0, 5, true);
+            } else {
+                $user['recentactivity'] = null;
+            }
 
             if (strpos($data, '<div class="badges">') !== false) {
                 if (strpos($data, 'xbox360Badge') !== false) {
