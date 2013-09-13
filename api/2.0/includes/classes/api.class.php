@@ -55,15 +55,19 @@ class API extends Base
             $user['gamerscore']                 = (int) trim($this->find($data, '<div class="gamerscore">', '</div>'));
             $user['reputation']                 = 0;
             $user['presence']                   = trim(str_replace("\r\n", ' - ', $this->find($data, '<div class="presence">', '</div>')));
-            $user['online']                     = ((strpos($user['presence'], 'Last seen') !== false) or (strpos($user['presence'], 'Offline') !== false) or (strpos($user['presence'], ' ') !== false)) ? false : true;
+            $user['online']                     = (bool)(strpos($user['presence'], 'Online') !== false);
             $user['gamertag']                   = str_replace(array('&#39;s Profile', '\'s Profile'), '', trim($this->find($data, '<h1 class="pageTitle">', '</h1>')));
             $user['motto']                      = $this->clean(trim(strip_tags($this->find($data, '<div class="motto">', '</div>'))));
             $user['name']                       = trim(strip_tags($this->find($data, '<div class="name" title="', '">')));
             $user['location']                   = trim(strip_tags(str_replace('<label>Location:</label>', '', trim($this->find($data, '<div class="location">', '</div>')))));
             $user['biography']                  = trim(strip_tags(str_replace('<label>Bio:</label>', '', trim($this->find($data, '<div class="bio">', '</div>')))));
 
-            $recentactivity         = $this->fetch_games($gamertag, $region);
-            $user['recentactivity'] = array_slice($recentactivity['games'], 0, 5);
+            $recentactivity = $this->fetch_games($gamertag, $region);
+            if (is_array($recentactivity)) {
+                $user['recentactivity'] = array_slice($recentactivity['games'], 0, 5, true);
+            } else {
+                $user['recentactivity'] = null;
+            }
 
             if (strpos($data, '<div class="badges">') !== false) {
                 if (strpos($data, 'xbox360Badge') !== false) {
@@ -316,7 +320,7 @@ class API extends Base
 
         $json = json_decode($data, true);
 
-        if ($json['Data']['Friends'] != null) {
+        if (!empty($json['Data']) && $json['Data']['Friends'] != null) {
             $friends                 = array();
             $friends['total']        = 0;
             $friends['totalonline']  = 0;
