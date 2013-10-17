@@ -131,6 +131,19 @@
 <section class="hidden-print">
   <div class="row">
     <div class="span8">
+      <!-- Google AdSense -->
+      <p class="ads">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- XboxLeaders.com Main -->
+        <ins class="adsbygoogle"
+          style="display:inline-block;width:728px;height:90px"
+          data-ad-client="ca-pub-9916449857543818"
+          data-ad-slot="6366675455"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </p>
+      <!-- END Google AdSense -->
       <p class="lead">
         XboxLeaders has a vibrant community of folks helping each other out. You can
         <a href="#getting-support">get support</a>,

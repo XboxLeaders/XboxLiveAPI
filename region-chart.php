@@ -135,11 +135,22 @@
 <section class="hidden-print">
   <div class="row stripe-ad">
     <div class="span8">
-      
+      <!-- Google AdSense -->
+      <p class="ads">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- XboxLeaders.com Main -->
+        <ins class="adsbygoogle"
+          style="display:inline-block;width:728px;height:90px"
+          data-ad-client="ca-pub-9916449857543818"
+          data-ad-slot="6366675455"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </p>
+      <!-- END Google AdSense -->
       <p class="lead">
         XboxLeaders allows you to return results from different regions by adding a parameter to each request.
       </p>
-
     </div>
   </div>
 </section>

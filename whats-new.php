@@ -131,13 +131,24 @@
 <section class="hidden-print">
   <div class="row stripe-ad">
     <div class="span8">
-      
-<p class="lead">
-  XboxLeaders is always getting a little awesome-er. So here's what's new in the latest version, XboxLeaders
-  2.0. Have some ideas for new features?
-  <a href="../community/">Help contribute</a>.
-</p>
-
+      <!-- Google AdSense -->
+      <p class="ads">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- XboxLeaders.com Main -->
+        <ins class="adsbygoogle"
+          style="display:inline-block;width:728px;height:90px"
+          data-ad-client="ca-pub-9916449857543818"
+          data-ad-slot="6366675455"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </p>
+      <!-- END Google AdSense -->
+      <p class="lead">
+        XboxLeaders is always getting a little awesome-er. So here's what's new in the latest version, XboxLeaders
+        2.0. Have some ideas for new features?
+        <a href="../community/">Help contribute</a>.
+      </p>
     </div>
   </div>
 </section>
