@@ -130,12 +130,23 @@
 <section class="hidden-print">
   <div class="row stripe-ad">
     <div class="span8">
-      
+      <!-- Google AdSense -->
+      <p class="ads">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- XboxLeaders.com Main -->
+        <ins class="adsbygoogle"
+          style="display:inline-block;width:728px;height:90px"
+          data-ad-client="ca-pub-9916449857543818"
+          data-ad-slot="6366675455"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </p>
+      <!-- END Google AdSense -->
       <p class="lead">
         Setting up the API is pretty straightforward. To start, you'll need to have <a href="http://php.net/">PHP 5.4</a> or higher,
         as well as the JSON and cURL libraries. Apache 2.2 is also strongly recommended.
       </p>
-
     </div>
   </div>
 </section>
