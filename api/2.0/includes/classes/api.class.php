@@ -315,7 +315,7 @@ class API extends Base
             $headers   = array('X-Requested-With: XMLHttpRequest', 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
             $data      = $this->fetch_url('https://live.xbox.com/' . $region . '/Friends/List?Gamertag=' . urlencode($gamertag), $url, 10, $post_data, $headers);
             $freshness = 'new';
-            $this->__cache->store($data, 3600);
+            $this->__cache->store($key, $data, 3600);
         }
 
         $json = json_decode($data, true);
@@ -375,7 +375,7 @@ class API extends Base
         if (!$data) {
             $data      = $this->fetch_url($url);
             $freshness = 'new';
-            $this->__cache->store($data, 3600);
+            $this->__cache->store($key, $data, 3600);
         }
 
         $json = json_decode($data, true);
