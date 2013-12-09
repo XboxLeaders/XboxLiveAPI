@@ -58,7 +58,7 @@
           <ul class="nav">
             <li class="hidden-tablet  active"><a href="./">Home</a></li>
             <li><a href="./get-started/">Get Started</a></li>
-            <li><a href="../region-chart/">Region Chart</a></li>
+            <li><a href="./region-chart/">Region Chart</a></li>
             <li class="dropdown-split-left"><a href="./community/">Community</a></li>
             <li class="dropdown dropdown-split-right hidden-phone">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -120,10 +120,11 @@
           <div id="iconCarousel" class="carousel slide">
             <!-- Carousel items -->
             <div class="carousel-inner">
-              <div class="active item"><div><i class="icon-trophy"></i></div></div>
+              <div class="active item"><div><i class="icon-user"></i></div></div>
+              <div class="item"><div><i class="icon-sitemap"></i></div></div>
+              <div class="item"><div><i class="icon-trophy"></i></div></div>
               <div class="item"><div><i class="icon-group"></i></div></div>
               <div class="item"><div><i class="icon-search"></i></div></div>
-              <div class="item"><div><i class="icon-sitemap"></i></div></div>
             </div>
             <!-- Carousel nav -->
             <a class="carousel-control left" href="#iconCarousel" data-slide="prev"
