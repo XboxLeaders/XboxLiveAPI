@@ -11,7 +11,7 @@
  * @license     http://opensource.org/licenses/mit-license.php The MIT License *
  *******************************************************************************/
 
-include('../includes/bootloader.php');
+include('includes/bootloader.php');
 include('includes/kernel.php');
 
 $api->output_headers();
