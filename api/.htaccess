@@ -1,7 +1,13 @@
+# Rewrite the new URL before anything else
+Options +FollowSymLinks
+RewriteEngine On
+RewriteRule ^1\.0/(.*)$ /api/$1 [R=301,NE,L,QSA]
+RewriteRule ^2\.0/(.*)$ /api/$1 [R=301,NE,L,QSA]
+
+# Set the proper headers and stuff
 Header unset Pragma
 FileETag None
 Header unset ETag
-
 ExpiresActive On
 ExpiresDefault A0
 
@@ -11,11 +17,7 @@ Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0, proxy-
 Header set Pragma "no-cache"
 </FilesMatch>
 
-Options +FollowSymLinks
-RewriteEngine On
-
-RedirectMatch 301 ^/api/(1\.0|2\.0)/.* https://www.xboxleaders.com/api/
-
+# Route to the proper handler
 RewriteRule ^achievements\.(json|xml)$ achievements.php?format=$1 [L,QSA] 
 RewriteRule ^games\.(json|xml)$ games.php?format=$1 [L,QSA] 
 RewriteRule ^profile\.(json|xml)$ profile.php?format=$1 [L,QSA] 
