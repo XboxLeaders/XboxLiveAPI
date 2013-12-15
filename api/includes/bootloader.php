@@ -26,19 +26,9 @@ define('CACHE_ENGINE', 'apc');
  */
 $accounts = array(
     array(
-        'email'    => '',
-        'password' => '',
-        'gamertag' => ''
-    ),
-    array(
-        'email'    => '',
-        'password' => '',
-        'gamertag' => ''
-    ),
-    array(
-        'email'    => '',
-        'password' => '',
-        'gamertag' => ''
+        'email'    => 'john@example.com',
+        'password' => 'Password123',
+        'gamertag' => 'Major Nelson'
     )
 );
 
@@ -61,10 +51,9 @@ define('XBOX_GAMERTAG', $account['gamertag']);
 /*!
  * Define some log file locations.
  */
-define('COOKIE_FILE', '../includes/cookies/' . XBOX_EMAIL . '.jar'); // path to cookie file
-define('DEBUG_FILE', '../includes/logs/debug.log');                  // path to debug log
-define('STACK_TRACE_FILE', '../includes/logs/stack_trace.log');      // path to stack trace
-define('ACCESS_FILE', '../includes/logs/access.log');                // path to access log
+define('COOKIE_FILE', '../includes/cookies/' . XBOX_EMAIL . '.jar');
+define('DEBUG_FILE', '../includes/logs/debug.log');
+define('STACK_TRACE_FILE', '../includes/logs/stack_trace.log');
 
 /*!
  * Initiate the caching engine.
