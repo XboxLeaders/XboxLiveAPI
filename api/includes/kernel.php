@@ -26,5 +26,4 @@ $api->cookie_file      = COOKIE_FILE;
 $api->debug_file       = DEBUG_FILE;
 $api->stack_trace_file = STACK_TRACE_FILE;
 $api->access_file      = ACCESS_FILE;
-$api->save_to_access($_SERVER['REMOTE_ADDR'] . ' ' . $_SERVER['REQUEST_URI']);
 $api->init(XBOX_EMAIL, XBOX_PASSWORD);

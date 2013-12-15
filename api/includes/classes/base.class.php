@@ -25,7 +25,6 @@ class Base
     public $cookie_file       = '';      // cookie jar path
     public $debug_file        = '';      // debug file path
     public $stack_trace_file  = '';      // stack trace file path
-    public $access_file       = '';      // access log file path
     public $runtime           = null;    // current runtime
     public $ip                = null;    // ip address to use for session, generated in __construct()
     public $format            = 'xml';   // default response format
@@ -106,23 +105,12 @@ class Base
      */
     public function output_payload($data)
     {
-        //!!! Version 1.0 being deprecated soon!
-        if ($this->version == '1.0') {
-            $payload = array(
-                'Data' => $data,
-                'In' => round(microtime(true) - $this->runtime, 3),
-                'Stat' => 'ok',
-                'Authed' => 'false',
-                'AuthedAs' => null
-            );
-        } else {
-            $payload = array(
-                'status' => 'success',
-                'version' => $this->version,
-                'data' => $data,
-                'runtime' => round(microtime(true) - $this->runtime, 3)
-            );
-        }
+        $payload = array(
+            'status' => 'success',
+            'version' => $this->version,
+            'data' => $data,
+            'runtime' => round(microtime(true) - $this->runtime, 3)
+        );
 
         // Output the data in the desired format.
         switch ($this->format) {
@@ -147,26 +135,15 @@ class Base
             http_response_code((int) $code);
         }
 
-        //!!! Version 1.0 being deprecated soon!
-        if ($this->version == '1.0') {
-            $payload = array(
-                'Error' => $this->errors[$code],
-                'In' => round(microtime(true) - $this->runtime, 3),
-                'Stat' => 'fail',
-                'Authed' => 'false',
-                'AuthedAs' => null
-            );
-        } else {
-            $payload = array(
-                'status' => 'error',
-                'version' => $this->version,
-                'data' => array(
-                    'code' => $code,
-                    'message' => $this->errors[$code]
-                ),
-                'runtime' => round(microtime(true) - $this->runtime, 3)
-            );
-        }
+        $payload = array(
+            'status' => 'error',
+            'version' => $this->version,
+            'data' => array(
+                'code' => $code,
+                'message' => $this->errors[$code]
+            ),
+            'runtime' => round(microtime(true) - $this->runtime, 3)
+        );
 
         // Output the data in the desired format.
         switch ($this->format) {
@@ -491,22 +468,6 @@ class Base
     }
 
     /*!
-     * Saves access data to access log, if enabled
-     */
-    public function save_to_access($string)
-    {
-        if ($this->debug) {
-            $file = fopen($this->access_file, 'a+');
-            if (!$file) {
-                $this->error = 608;
-            } else {
-                fwrite($file, '[' . date('Y-m-d H:i:s') . '] (' . $this->version . ') ' . $string . "\n");
-                fclose($file);
-            }
-        }
-    }
-
-    /*!
      * Save items to the debug log
      */
     protected function save_to_debug($string)
@@ -578,7 +539,7 @@ function output_pretty_jsonp($json, $callback)
 function output_pretty_xml($mixed, $xml = false)
 {
     if ($xml === false) {
-        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><xbox status="' . (empty($mixed['status']) ? $mixed['Stat'] : $mixed['status']) . '" version="' . (empty($mixed['version']) ? '1.0' : $mixed['version']) . '" />');
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><xbox status="' . $mixed['status'] . '" version="' . $mixed['version'] . '" />');
     }
 
     foreach ($mixed as $key => $value) {
