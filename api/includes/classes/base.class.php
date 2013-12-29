@@ -25,9 +25,10 @@ class Base
     public $cookie_file       = '';      // cookie jar path
     public $debug_file        = '';      // debug file path
     public $stack_trace_file  = '';      // stack trace file path
+    public $error_file        = '';      // error file path
     public $runtime           = null;    // current runtime
     public $ip                = null;    // ip address to use for session, generated in __construct()
-    public $format            = 'xml';   // default response format
+    public $format;                      // default response format
     public $version           = null;    // current api version
     public $offline           = false;   // api offline
     public $callback          = 'foo';   // callback function for jsonp responses
@@ -120,6 +121,8 @@ class Base
                 return output_pretty_json($payload);
             case 'jsonp':
                 return output_pretty_jsonp($payload, $this->callback);
+            case 'php':
+                return output_pretty_php($payload);
         }
 
         return false;
@@ -153,6 +156,8 @@ class Base
                 return output_pretty_json($payload);
             case 'jsonp':
                 return output_pretty_jsonp($payload, $this->callback);
+            case 'php':
+                return output_pretty_php($payload);
         }
 
         return false;
@@ -497,6 +502,20 @@ class Base
                 fwrite($file, print_r($this->stack_trace, true));
                 fclose($file);
             }
+        }
+    }
+
+    /*!
+     * Save a error log only for this script
+     */
+    protected function save_error()
+    {
+        $file = fopen($this->error_file, 'a+');
+        if (!$file) {
+            $this->error = 606;
+        } else {
+            fwrite($file, '[' . date('Y-m-d H:i:s') . '] ' . $errno . ' - ' . $errstr . ' in ' . $errfile . ' on line ' . $errline . "\n");
+            fclose($file);
         }
     }
 }
