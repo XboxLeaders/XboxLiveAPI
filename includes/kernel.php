@@ -27,6 +27,5 @@ $api->debug            = (isset($_GET['debug']));
 $api->cookie_file      = COOKIE_FILE;
 $api->debug_file       = DEBUG_FILE;
 $api->stack_trace_file = STACK_TRACE_FILE;
-$api->error_file       = ERROR_FILE;
 
 $api->init(XBOX_EMAIL, XBOX_PASSWORD);

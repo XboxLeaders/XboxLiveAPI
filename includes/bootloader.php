@@ -15,11 +15,6 @@ include('classes/cache.class.php');
 include('classes/base.class.php');
 
 /*!
- * Set error logging level. Default is E_ALL
- */
-set_error_handler('save_error', E_ALL);
-
-/*!
  * Define the caching engine to be used.
  * Supports: apc, memcached, xcache, disk
  */
@@ -59,7 +54,6 @@ define('XBOX_GAMERTAG', $account['gamertag']);
 define('COOKIE_FILE', '../includes/cookies/' . XBOX_EMAIL . '.jar');
 define('DEBUG_FILE', '../includes/logs/debug.log');
 define('STACK_TRACE_FILE', '../includes/logs/stack_trace.log');
-define('ERROR_FILE', '../includes/logs/error.log');
 
 /*!
  * Initiate the caching engine.
