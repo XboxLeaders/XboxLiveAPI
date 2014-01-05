@@ -1,11 +1,11 @@
-#[XboxLiveAPI](https://www.xboxleaders.com)
+#[XboxLiveAPI](http://xboxleaders.github.io)
 ###Simple & Powerful RESTful API For Xbox LIVE
 
 XboxLiveAPI is a simple and powerful RESTful API created to obtain data from Xbox LIVE, created and
 maintained by [Jason Clemons](http://twitter.com/jasonclemons) and [Alan Wynn](http://twitter.com/djekl).
 Stay up to date [@xboxleaders](http://twitter.com/xboxleaders).
 
-Get started at http://docs.xboxleaders.com/get-started/!
+Get started at http://xboxleaders.github.io/get-started/!
 
 Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6) to keep the servers alive!
 
@@ -15,8 +15,8 @@ Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?
 - The XboxLiveAPI documentation is licensed under the CC BY 3.0 License:
   - http://creativecommons.org/licenses/by/3.0/
 - Attribution is not required, but much appreciated:
-  - `Data Provided By XboxLeaders - https://www.xboxleaders.com`
-- Full details: http://docs.xboxleaders.com/license
+  - `Data Provided By XboxLeaders - https://xboxleaders.github.io`
+- Full details: http://xboxleaders.github.io/license/
 
 ## Requirements
   1. [PHP](http://php.net/downloads.php) 5.4 or higher required
@@ -25,7 +25,11 @@ Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?
   2. [Apache](http://httpd.apache.org) 2.2 or higher required
     - mod_header
     - mod_expires
-  3. [APC](http://pecl.php.net/package/apc)/[XCache](http://xcache.lighttpd.net)/[Memcached](http://memcached.org) highly recommended
+    - mod_rewrite
+  3. Caching Engines (Highly Recommended!)
+    - [APC](http://pecl.php.net/package/apc)
+    - [XCache](http://xcache.lighttpd.net)
+    - [Memcached](http://memcached.org)
 
 ## Composer
   1. Get [Composer](http://getcomposer.org)
