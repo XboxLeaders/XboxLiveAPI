@@ -15,7 +15,7 @@ Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?
 - The XboxLiveAPI documentation is licensed under the CC BY 3.0 License:
   - http://creativecommons.org/licenses/by/3.0/
 - Attribution is not required, but much appreciated:
-  - `Data Provided By XboxLeaders - https://xboxleaders.github.io`
+  - `Data Provided By XboxLeaders - http://xboxleaders.github.io`
 - Full details: http://xboxleaders.github.io/license/
 
 ## Requirements
