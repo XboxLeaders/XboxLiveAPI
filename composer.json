@@ -2,13 +2,13 @@
   "name": "xboxleaders/xboxliveapi",
   "description": "Simple & Powerful RESTful API for Xbox LIVE",
   "keywords": ["xbox", "xboxlive", "api", "rest"],
-  "homepage": "https://xboxleaders.github.io/",
+  "homepage": "http://xboxleaders.github.io/",
   "authors": [
     {
       "name": "Jason Clemons",
-      "email": "me@jasonclemons.me",
+      "email": "jason@xboxleaders.com",
       "role": "Creator/Developer",
-      "homepage": "http://jasonclemons.me"
+      "homepage": "http://about.me/jasonclemons"
     },
     {
       "name": "Alan Wynn",
