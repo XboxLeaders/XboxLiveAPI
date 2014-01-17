@@ -1,15 +1,17 @@
 <?php
-/*******************************************************************************
- * XboxLeaders Xbox LIVE REST API                                              *
- * =========================================================================== *
- * @file        cache.class.php                                                *
- * @package     XboxLiveAPI                                                    *
- * @version     2.0                                                            *
- * @copyright   (c) 2013 - Jason Clemons <me@jasonclemons.me>                  *
- * @contributor Alan Wynn <http://github.com/djekl>                            *
- * @contributor Luke Zbihlyj <http://github.com/lukezbihlyj>                   *
- * @license     http://opensource.org/licenses/mit-license.php The MIT License *
- *******************************************************************************/
+/**
+* This file takes care of all the caching done by the API.
+*
+* LICENSE: MIT (http://opensource.org/licenses/mit-license.html)
+*
+* @category     XboxLeaders
+* @package      XboxLiveAPI
+* @copyright    Copyright (c) 2012 - 2014 XboxLeaders
+* @license      http://xboxleaders.github.io/license/ MIT License
+* @version      2.0
+* @link         http://github.com/XboxLeaders/XboxLiveAPI
+* @since        File available since Release 1.0
+*/
 
 class Cache
 {
