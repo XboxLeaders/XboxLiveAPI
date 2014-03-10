@@ -332,8 +332,8 @@ class API extends Base
             $i = 0;
             foreach ($json['Data']['Friends'] as $friend) {
                 $friends['friends'][$i]['gamertag']          = $friend['GamerTag'];
-                $friends['friends'][$i]['gamerpic']['large'] = $friend['GamerTileUrl'];
-                $friends['friends'][$i]['gamerpic']['small'] = $friend['LargeGamerTileUrl'];
+                $friends['friends'][$i]['gamerpic']['small'] = $friend['GamerTileUrl'];
+                $friends['friends'][$i]['gamerpic']['large'] = $friend['LargeGamerTileUrl'];
                 $friends['friends'][$i]['gamerscore']        = $friend['GamerScore'];
                 $friends['friends'][$i]['online']            = (bool)$friend['IsOnline'];
                 $friends['friends'][$i]['status']            = $friend['Presence'];
