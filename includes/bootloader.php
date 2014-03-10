@@ -53,9 +53,9 @@ define('XBOX_GAMERTAG', $account['gamertag']);
 /*!
  * Define some log file locations.
  */
-define('COOKIE_FILE', '../includes/cookies/' . XBOX_EMAIL . '.jar');
-define('DEBUG_FILE', '../includes/logs/debug.log');
-define('STACK_TRACE_FILE', '../includes/logs/stack_trace.log');
+define('COOKIE_FILE', 'includes/cookies/' . XBOX_EMAIL . '.jar');
+define('DEBUG_FILE', 'includes/logs/debug.log');
+define('STACK_TRACE_FILE', 'includes/logs/stack_trace.log');
 
 /*!
  * Initiate the caching engine.
