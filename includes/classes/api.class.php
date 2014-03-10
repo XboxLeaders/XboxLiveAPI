@@ -229,14 +229,14 @@ class API extends Base
     public function fetch_games($gamertag, $region)
     {
         $gamertag  = trim($gamertag);
-        $url       = 'https://live.xbox.com/' . $region . '/Activity?compareTo=' . urlencode($gamertag);
+        $url       = 'https://live.xbox.com/' . $region . '/Activity';
         $key       = $this->version . ':games.' . $gamertag;
         $data      = $this->__cache->fetch($key);
         $freshness = 'from cache';
 
         if (!$data) {
             $data      = $this->fetch_url($url);
-            $post_data = '__RequestVerificationToken=' . urlencode(trim($this->find($data, '<input name="__RequestVerificationToken" type="hidden" value="', '" />')));
+            $post_data = '__RequestVerificationToken=' . urlencode(trim($this->find($data, '<input name="__RequestVerificationToken" type="hidden" value="', '" />'))) . '&compareTo=' . urlencode($gamertag);
             $headers   = array('X-Requested-With: XMLHttpRequest', 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
             $data      = $this->fetch_url('https://live.xbox.com/' . $region . '/Activity/Summary?compareTo=' . urlencode($gamertag) . '&lc=1033', $url, 10, $post_data, $headers);
             $freshness = 'new';
