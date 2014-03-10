@@ -82,8 +82,8 @@ class Base
     public function init($email, $password)
     {
         // Email and password. Make sure it's URL-friendly.
-        $this->email = str_replace('@', '%40', strtolower($email));
-        $this->password = $password;
+        $this->email = urlencode($email);
+        $this->password = urlencode($password);
 
         // Check the login session to make sure it's valid.
         if ($this->check_login()) {
