@@ -1,7 +1,7 @@
 #[XboxLiveAPI](http://xboxleaders.github.io)
 ###Simple & Powerful RESTful API For Xbox LIVE
 
-[![Latest Stable Version](https://poser.pugx.org/xboxleaders/xboxliveapi/v/stable.png)]https://packagist.org/packages/xboxleaders/xboxliveapi] [![Total Downloads](https://poser.pugx.org/xboxleaders/xboxliveapi/downloads.png)]https://packagist.org/packages/xboxleaders/xboxliveapi] [![Latest Unstable Version](https://poser.pugx.org/xboxleaders/xboxliveapi/v/unstable.png)]https://packagist.org/packages/xboxleaders/xboxliveapi] [![License](https://poser.pugx.org/xboxleaders/xboxliveapi/license.png)]https://packagist.org/packages/xboxleaders/xboxliveapi] 
+[![Latest Stable Version](https://poser.pugx.org/xboxleaders/xboxliveapi/v/stable.png)]https://packagist.org/packages/xboxleaders/xboxliveapi) [![Total Downloads](https://poser.pugx.org/xboxleaders/xboxliveapi/downloads.png)]https://packagist.org/packages/xboxleaders/xboxliveapi) [![Latest Unstable Version](https://poser.pugx.org/xboxleaders/xboxliveapi/v/unstable.png)]https://packagist.org/packages/xboxleaders/xboxliveapi) [![License](https://poser.pugx.org/xboxleaders/xboxliveapi/license.png)]https://packagist.org/packages/xboxleaders/xboxliveapi)
 
 XboxLiveAPI is a simple and powerful RESTful API created to obtain data from Xbox LIVE, created and
 maintained by [Jason Clemons](http://about.me/jasonclemons) and [Alan Wynn](http://twitter.com/djekl).
