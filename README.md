@@ -1,4 +1,4 @@
-#[XboxLiveAPI](http://xboxleaders.github.io)
+#[XboxLiveAPI](http://xboxleaders.com)
 ###Simple & Powerful RESTful API For Xbox LIVE
 
 [![Latest Stable Version](https://poser.pugx.org/xboxleaders/xboxliveapi/v/stable.png)](https://packagist.org/packages/xboxleaders/xboxliveapi) [![Total Downloads](https://poser.pugx.org/xboxleaders/xboxliveapi/downloads.png)](https://packagist.org/packages/xboxleaders/xboxliveapi) [![Latest Unstable Version](https://poser.pugx.org/xboxleaders/xboxliveapi/v/unstable.png)](https://packagist.org/packages/xboxleaders/xboxliveapi) [![License](https://poser.pugx.org/xboxleaders/xboxliveapi/license.png)](https://packagist.org/packages/xboxleaders/xboxliveapi)
@@ -7,7 +7,7 @@ XboxLiveAPI is a simple and powerful RESTful API created to obtain data from Xbo
 maintained by [Jason Clemons](http://about.me/jasonclemons) and [Alan Wynn](http://twitter.com/djekl).
 Stay up to date [@xboxleaders](http://twitter.com/xboxleaders).
 
-Get started at http://xboxleaders.github.io/get-started/!
+Get started at http://xboxleaders.com/get-started/!
 
 Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6) to keep the servers alive!
 
@@ -17,8 +17,8 @@ Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?
 - The XboxLiveAPI documentation is licensed under the CC BY 3.0 License:
   - http://creativecommons.org/licenses/by/3.0/
 - Attribution is not required, but much appreciated:
-  - `Data Provided By XboxLeaders - http://xboxleaders.github.io`
-- Full details: http://xboxleaders.github.io/license/
+  - `Data Provided By XboxLeaders - http://xboxleaders.com`
+- Full details: http://xboxleaders.com/license/
 
 ## Requirements
   1. [PHP](http://php.net/downloads.php) 5.4 or higher required
