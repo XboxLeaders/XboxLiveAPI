@@ -3,7 +3,9 @@ namespace XboxLeaders\XboxApi\Config;
 
 class Config
 {
-    require 'vendor/autoload.php';
+    define('API_VERSION', '3.0.0');
+
+    define('DEBUG_MODE', false);
 
     define('CACHE_ENGINE', 'apc');
 
@@ -14,7 +16,11 @@ class Config
         )
     ));
 
-    define('COOKIE_FILE', 'path/to/cookie.jar');
+    define('XBOX_ACCOUNT_EMAIL', '');
+
+    define('XBOX_ACCOUNT_PWORD', '');
+
+    define('COOKIE_JAR', 'path/to/cookie.jar');
 
     define('DEBUG_FILE', 'path/to/debug.log');
 

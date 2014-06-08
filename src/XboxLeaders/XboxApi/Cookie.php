@@ -9,15 +9,15 @@ class Cookie
     {
         $this->logged_in = false;
 
-        if (file_exists($this->cookie_file)) {
-            $f = fopen($this->cookie_file, 'w');
+        if (file_exists(COOKIE_JAR)) {
+            $f = fopen(COOKIE_JAR, 'w');
             fclose($f);
         }
     }
 
     protected function add_cookie($domain, $name, $value, $path = '/', $expires = 0)
     {
-        $file = fopen($this->cookie_file, 'a');
+        $file = fopen(COOKIE_JAR, 'a');
 
         if (!$file) {
             $this->error = 603;

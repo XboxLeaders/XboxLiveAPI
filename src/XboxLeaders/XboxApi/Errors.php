@@ -5,6 +5,8 @@ use XboxLeaders\XboxApi\Config;
 
 class Errors
 {
+    public $stack_trace;
+
     public $errors = array(
         300 => 'The key supplied was not valid.',
         301 => 'The gamertag supplied was not valid.',
@@ -32,13 +34,13 @@ class Errors
 
     protected function save_to_debug($string)
     {
-        if ($this->debug) {
-            $file = fopen($this->debug_file, 'a+');
+        if (DEBUG_MODE) {
+            $file = fopen(DEBUG_FILE, 'a+');
 
             if (!$file) {
                 $this->error = 604;
             } else {
-                fwrite($file, '[' . date('Y-m-d H:i:s') . '] (' . $this->version . ') ' . $string . "\n");
+                fwrite($file, '[' . date('Y-m-d H:i:s') . '] (' . API_VERSION . ') ' . $string . "\n");
                 fclose($file);
             }
         }
@@ -46,8 +48,8 @@ class Errors
 
     protected function save_stack_trace()
     {
-        if ($this->debug) {
-            $file = fopen($this->stack_trace_file, 'w');
+        if (DEBUG_MODE) {
+            $file = fopen(STACK_TRACE_FILE, 'w');
             if (!$file) {
                 $this->error = 605;
             } else {
