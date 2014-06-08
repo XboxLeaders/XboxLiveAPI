@@ -9,13 +9,6 @@ class Config
 
     define('CACHE_ENGINE', 'apc');
 
-    define('XBOX_ACCOUNTS', array(
-        array(
-            'email' => 'john@appleseed.com',
-            'passwd' => 'example123',
-        )
-    ));
-
     define('XBOX_ACCOUNT_EMAIL', '');
 
     define('XBOX_ACCOUNT_PWORD', '');

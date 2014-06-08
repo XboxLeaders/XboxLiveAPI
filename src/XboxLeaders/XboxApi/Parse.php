@@ -4,9 +4,9 @@ namespace XboxLeaders\XboxApi\Parse;
 use XboxLeaders\XboxApi\Config;
 use XboxLeaders\XboxApi\Utils;
 
-class Parse extends Base
+class Parse
 {
-    public function fetch_profile($gamertag, $region)
+    public function fetchProfile($gamertag, $region)
     {
         $gamertag = trim($gamertag);
         $url = 'http://live.xbox.com/' . $region . '/Profile?gamertag=' . urlencode($gamertag);
@@ -90,7 +90,7 @@ class Parse extends Base
         }
     }
 
-    public function fetch_achievements($gamertag, $gameid, $region)
+    public function fetchAchievements($gamertag, $gameid, $region)
     {
         $gamertag = trim($gamertag);
         $url      = 'https://live.xbox.com/' . $region . '/Activity/Details?titleId=' . urlencode($gameid) . '&compareTo=' . urlencode($gamertag);
@@ -180,7 +180,7 @@ class Parse extends Base
         }
     }
 
-    public function fetch_games($gamertag, $region)
+    public function fetchGames($gamertag, $region)
     {
         $gamertag  = trim($gamertag);
         $url       = 'https://live.xbox.com/' . $region . '/Activity';
@@ -250,7 +250,7 @@ class Parse extends Base
         }
     }
 
-    public function fetch_friends($gamertag, $region)
+    public function fetchFriends($gamertag, $region)
     {
         $gamertag  = trim($gamertag);
         $url       = 'https://live.xbox.com/' . $region . '/Friends';
@@ -305,7 +305,7 @@ class Parse extends Base
         }
     }
 
-    public function fetch_search($query, $region)
+    public function fetchSearch($query, $region)
     {
         $query     = trim($query);
         $url       = 'http://marketplace.xbox.com/' . $region . '/SiteSearch/xbox/?query=' . urlencode($query);
