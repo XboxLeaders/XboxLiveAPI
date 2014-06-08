@@ -20,10 +20,7 @@ Get started at http://xboxleaders.com/get-started/!
 
 ## Requirements
   1. [PHP](http://php.net/downloads.php) 5.4 or higher required
-    - [JSON](http://pecl.php.net/package/json)
-  2. [Apache](http://httpd.apache.org) 2.2 or higher required
-    - mod_rewrite
-  3. Caching Engines (Highly Recommended!)
+  2. Caching Engines (Highly Recommended!)
     - [APC](http://pecl.php.net/package/apc)
     - [XCache](http://xcache.lighttpd.net)
     - [Memcached](http://memcached.org)
