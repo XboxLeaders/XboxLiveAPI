@@ -21,7 +21,8 @@ class Parse
             $freshness = 'from cache';
         }
 
-        if (stripos($data, '<section class="contextRail custom">')) {
+        if (stripos($data, '<section class="contextRail custom">'))
+        {
             $user = array();
             $user['gamertag']                   = trim($gamertag);
             $user['tier']                       = (strpos($data, '<div class="goldBadge">') !== false) ? 'gold' : 'silver';
@@ -43,20 +44,27 @@ class Parse
             $user['biography']                  = trim(strip_tags(str_replace('<label>Bio:</label>', '', trim($this->find($data, '<div class="bio">', '</div>')))));
 
             $recentactivity = $this->fetch_games($gamertag, $region);
-            if (is_array($recentactivity)) {
+            if (is_array($recentactivity))
+            {
                 $user['recentactivity'] = array_slice($recentactivity['games'], 0, 5, true);
-            } else {
+            }
+            else
+            {
                 $user['recentactivity'] = null;
             }
 
-            if (strpos($data, '<div class="badges">') !== false) {
-                if (strpos($data, 'xbox360Badge') !== false) {
+            if (strpos($data, '<div class="badges">') !== false)
+            {
+                if (strpos($data, 'xbox360Badge') !== false)
+                {
                     $user['badges']['xboxlaunchteam'] = true;
                 }
-                if (strpos($data, 'nxeBadge') !== false) {
+                if (strpos($data, 'nxeBadge') !== false)
+                {
                     $user['badges']['nxelaunchteam'] = true;
                 }
-                if (strpos($data, 'kinectBadge') !== false) {
+                if (strpos($data, 'kinectBadge') !== false)
+                {
                     $user['badges']['kinectlaunchteam'] = true;
                 }
             }
@@ -70,18 +78,23 @@ class Parse
             );
 
             preg_match_all('~<div class="Star (.*?)"></div>~si', $data, $reputation);
-            foreach ($reputation[1] as $value) {
+            foreach ($reputation[1] as $value)
+            {
                 $user['reputation'] = $user['reputation'] + $starvalue[$value];
             }
 
             $user['freshness'] = $freshness;
 
             return $user;
-        } elseif (stripos($data, 'errorCode: \'404\'')) {
+        }
+        elseif (stripos($data, 'errorCode: \'404\''))
+        {
             $this->error = 501;
 
             return false;
-        } else {
+        }
+        else
+        {
             $this->error = 500;
             $this->__cache->remove($key);
             $this->force_new_login();
@@ -97,18 +110,22 @@ class Parse
         $key      = $this->version . ':achievements.' . $gamertag . '.' . $gameid;
 
         $data = $this->__cache->fetch($key);
-        if (!$data) {
+        if (!$data)
+        {
             $data      = $this->fetch_url($url);
             $freshness = 'new';
             $this->__cache->store($key, $data, 3600);
-        } else {
+        }
+        else
+        {
             $freshness = 'from cache';
         }
 
         $json = $this->find($data, 'broker.publish(routes.activity.details.load, ', ');');
         $json = json_decode($json, true);
 
-        if (!empty($json)) {
+        if (!empty($json))
+        {
             $achievements                           = array();
             $achievements['gamertag']               = $g = $json['Players'][0]['Gamertag'];
             $achievements['game']                   = $this->clean($json['Game']['Name']);
@@ -122,7 +139,8 @@ class Parse
             $achievements['lastplayed']             = (int)substr($json['Game']['Progress'][$g]['LastPlayed'], 6, 10);
 
             $i = 0;
-            foreach ($json['Achievements'] as $achievement) {
+            foreach ($json['Achievements'] as $achievement)
+            {
                 $achievements['achievements'][$i]['id']                  = $achievement['Id'];
                 $achievements['achievements'][$i]['title']               = '';
                 $achievements['achievements'][$i]['artwork']['locked']   = 'https://live.xbox.com/Content/Images/HiddenAchievement.png';
@@ -135,7 +153,8 @@ class Parse
                 $achievements['achievements'][$i]['unlockdate']          = null;
                 $achievements['achievements'][$i]['unlockedoffline']     = null;
 
-                if (!$achievement['IsHidden']) {
+                if (!$achievement['IsHidden'])
+                {
                     $ach_info  = pathinfo($achievement['TileUrl']);
                     $ach_str1  = base64_decode($ach_info['filename']);
                     $ach_str2  = strstr($ach_str1, '/ach');
@@ -146,19 +165,23 @@ class Parse
                     $achievements['achievements'][$i]['artwork']['unlocked'] = $ach_color;
                 }
 
-                if (!empty($achievement['Name'])) {
+                if (!empty($achievement['Name']))
+                {
                     $achievements['achievements'][$i]['title'] = $this->clean($achievement['Name']);
                 }
 
-                if (!empty($achievement['Description'])) {
+                if (!empty($achievement['Description']))
+                {
                     $achievements['achievements'][$i]['description'] = $this->clean($achievement['Description']);
                 }
 
-                if (!empty($achievement['Score'])) {
+                if (!empty($achievement['Score']))
+                {
                     $achievements['achievements'][$i]['gamerscore'] = $achievement['Score'];
                 }
 
-                if (!empty($achievement['EarnDates'][$g]['EarnedOn'])) {
+                if (!empty($achievement['EarnDates'][$g]['EarnedOn']))
+                {
                     $achievements['achievements'][$i]['unlocked']        = true;
                     $achievements['achievements'][$i]['unlockdate']      = (int)substr($achievement['EarnDates'][$g]['EarnedOn'], 6, 10);
                     $achievements['achievements'][$i]['unlockedoffline'] = (bool)$achievement['EarnDates'][$g]['IsOffline'];
@@ -169,10 +192,14 @@ class Parse
 
             $achievements['freshness'] = $freshness;
             return $achievements;
-        } elseif (stripos($data, 'errorCode: \'404\'')) {
+        }
+        elseif (stripos($data, 'errorCode: \'404\''))
+        {
             $this->error = 502;
             return false;
-        } else {
+        }
+        else
+        {
             $this->error = 500;
             $this->__cache->remove($key);
             $this->force_new_login();
@@ -188,7 +215,8 @@ class Parse
         $data      = $this->__cache->fetch($key);
         $freshness = 'from cache';
 
-        if (!$data) {
+        if (!$data)
+        {
             $data      = $this->fetch_url($url);
             $post_data = '__RequestVerificationToken=' . urlencode(trim($this->find($data, '<input name="__RequestVerificationToken" type="hidden" value="', '" />'))) . '&compareTo=' . urlencode($gamertag);
             $headers   = array('X-Requested-With: XMLHttpRequest', 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
@@ -199,7 +227,8 @@ class Parse
 
         $json = json_decode($data, true);
 
-        if ($json['Success'] == 'true' && $json['Data']['Players'][0]['Gamertag'] != $this->account_gamertag) {
+        if ($json['Success'] == 'true' && $json['Data']['Players'][0]['Gamertag'])
+        {
             $json                             = $json['Data'];
             $games                            = array();
             $games['gamertag']                = $g = $json['Players'][0]['Gamertag'];
@@ -211,8 +240,10 @@ class Parse
             $games['progress']                = $json['Players'][0]['PercentComplete'];
 
             $i = 0;
-            foreach ($json['Games'] as $game) {
-                if ($game['Progress'][$g]['LastPlayed'] !== 'null') {
+            foreach ($json['Games'] as $game)
+            {
+                if ($game['Progress'][$g]['LastPlayed'] !== 'null')
+                {
                     $games['games'][$i]['id']                      = $game['Id'];
                     $games['games'][$i]['hid']                     = dechex($game['Id']);
                     $games['games'][$i]['isapp']                   = (bool)($game['PossibleScore'] == 0);
@@ -229,7 +260,8 @@ class Parse
                     $games['achievements']['current']              = $games['achievements']['current'] + $games['games'][$i]['achievements']['current'];
                     $games['achievements']['total']                = $games['achievements']['total'] + $games['games'][$i]['achievements']['total'];
 
-                    if ($game['Progress'][$g]['Achievements'] !== 0) {
+                    if ($game['Progress'][$g]['Achievements'] !== 0)
+                    {
                         $games['games'][$i]['progress'] = round((($game['Progress'][$g]['Achievements'] / $game['PossibleAchievements']) * 100), 1);
                     }
 
@@ -239,10 +271,14 @@ class Parse
 
             $games['freshness'] = $freshness;
             return $games;
-        } elseif ($json['Data']['Players'][0]['Gamertag'] == $this->account_gamertag) {
+        }
+        elseif ($json['Data']['Players'][0]['Gamertag'] == $this->account_gamertag)
+        {
             $this->error = 501;
             return false;
-        } else {
+        }
+        else
+        {
             $this->error = 500;
             $this->__cache->remove($key);
             $this->force_new_login();
@@ -258,7 +294,8 @@ class Parse
         $data      = $this->__cache->fetch($key);
         $freshness = 'from cache';
 
-        if (!$data) {
+        if (!$data)
+        {
             $data      = $this->fetch_url($url);
             $post_data = '__RequestVerificationToken=' . urlencode(trim($this->find($data, '<input name="__RequestVerificationToken" type="hidden" value="', '" />')));
             $headers   = array('X-Requested-With: XMLHttpRequest', 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
@@ -269,14 +306,16 @@ class Parse
 
         $json = json_decode($data, true);
 
-        if (!empty($json['Data']) && $json['Data']['Friends'] != null) {
+        if (!empty($json['Data']) && $json['Data']['Friends'] != null)
+        {
             $friends                 = array();
             $friends['total']        = 0;
             $friends['totalonline']  = 0;
             $friends['totaloffline'] = 0;
 
             $i = 0;
-            foreach ($json['Data']['Friends'] as $friend) {
+            foreach ($json['Data']['Friends'] as $friend)
+            {
                 $friends['friends'][$i]['gamertag']          = $friend['GamerTag'];
                 $friends['friends'][$i]['gamerpic']['small'] = $friend['GamerTileUrl'];
                 $friends['friends'][$i]['gamerpic']['large'] = $friend['LargeGamerTileUrl'];
@@ -286,9 +325,12 @@ class Parse
                 $friends['friends'][$i]['lastseen']          = (int)substr($friend['LastSeen'], 6, 10);
 
                 $friends['total']++;
-                if ($friend['IsOnline']) {
+                if ($friend['IsOnline'])
+                {
                     $friends['totalonline']++;
-                } else {
+                }
+                else
+                {
                     $friends['totaloffline']++;
                 }
 
@@ -297,7 +339,9 @@ class Parse
 
             $friends['freshness'] = $freshness;
             return $friends;
-        } else {
+        }
+        else
+        {
             $this->error = 503;
             $this->__cache->remove($key);
             $this->force_new_login();
@@ -313,20 +357,23 @@ class Parse
         $data      = $this->__cache->fetch($key);
         $freshness = 'from cache';
 
-        if (!$data) {
+        if (!$data)
+        {
             $data      = $this->fetch_url($url);
             $freshness = 'new';
             $this->__cache->store($key, $data, 3600);
         }
 
         $json = json_decode($data, true);
-        if ($json['totalEntries'] >= 1) {
+        if ($json['totalEntries'] >= 1)
+        {
             $search                 = array();
             $search['totalresults'] = $json['totalEntries'];
             $search['resultslink']  = 'http://marketplace.xbox.com' . $json['allResultsUrl'];
 
             $i = 0;
-            foreach ($json['entries'] as $entry) {
+            foreach ($json['entries'] as $entry)
+            {
                 $search['results'][$i]['title']                 = $entry['title'];
                 $search['results'][$i]['parent']                = $entry['parentTitle'];
                 $search['results'][$i]['link']                  = 'http://marketplace.xbox.com' . $entry['detailsUrl'];
@@ -340,7 +387,9 @@ class Parse
 
             $search['freshness'] = $freshness;
             return $search;
-        } else {
+        }
+        else
+        {
             $this->error = 504;
             $this->__cache->remove($key);
             return false;

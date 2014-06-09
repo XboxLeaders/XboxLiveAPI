@@ -9,7 +9,8 @@ class Cookie
     {
         $this->logged_in = false;
 
-        if (file_exists(COOKIE_JAR)) {
+        if (file_exists(COOKIE_JAR))
+        {
             $f = fopen(COOKIE_JAR, 'w');
             fclose($f);
         }
@@ -19,9 +20,12 @@ class Cookie
     {
         $file = fopen(COOKIE_JAR, 'a');
 
-        if (!$file) {
+        if (!$file)
+        {
             $this->error = 603;
-        } else {
+        }
+        else
+        {
             fwrite($file, $domain . '	TRUE	' . $path . '	FALSE	' . $expires . '	' . $name . '	' . $value . "\r\n");
             fclose($file);
         }

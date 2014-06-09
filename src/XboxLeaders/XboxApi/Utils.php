@@ -27,12 +27,15 @@ class Utils
 
     protected function find($haystack, $start, $finish)
     {
-        if (!empty($haystack)) {
+        if (!empty($haystack))
+        {
             $s = explode($start, $haystack);
 
-            if (!empty($s[1])) {
+            if (!empty($s[1]))
+            {
                 $s = explode($finish, $s[1]);
-                if (!empty($s[0])) {
+                if (!empty($s[0]))
+                {
                     return $s[0];
                 }
             }
@@ -43,16 +46,15 @@ class Utils
 
     protected function clean($string)
     {
-        if ($this->format == 'xml') {
-            return $string;
-        }
-
         $string = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
         $string = htmlentities($string, ENT_QUOTES, 'UTF-8');
 
-        if (function_exists('mb_convert_encoding')) {
+        if (function_exists('mb_convert_encoding'))
+        {
             $string = mb_convert_encoding($string, 'UTF-8');
-        } else {
+        }
+        else
+        {
             $string = utf8_decode($string);
         }
 

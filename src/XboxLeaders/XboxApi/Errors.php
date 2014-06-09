@@ -34,12 +34,16 @@ class Errors
 
     protected function save_to_debug($string)
     {
-        if (DEBUG_MODE) {
+        if (DEBUG_MODE)
+        {
             $file = fopen(DEBUG_FILE, 'a+');
 
-            if (!$file) {
+            if (!$file)
+            {
                 $this->error = 604;
-            } else {
+            }
+            else
+            {
                 fwrite($file, '[' . date('Y-m-d H:i:s') . '] (' . API_VERSION . ') ' . $string . "\n");
                 fclose($file);
             }
@@ -48,11 +52,15 @@ class Errors
 
     protected function save_stack_trace()
     {
-        if (DEBUG_MODE) {
+        if (DEBUG_MODE)
+        {
             $file = fopen(STACK_TRACE_FILE, 'w');
-            if (!$file) {
+            if (!$file)
+            {
                 $this->error = 605;
-            } else {
+            }
+            else
+            {
                 fwrite($file, print_r($this->stack_trace, true));
                 fclose($file);
             }
