@@ -19,7 +19,7 @@ class API extends Base
     /**
      * Version of this API
      */
-    public $version = '2.0';
+    public $version = '2.0.1';
 
     /**
      * Fetch profile information
@@ -32,7 +32,7 @@ class API extends Base
     public function fetch_profile($gamertag, $region)
     {
         $gamertag = trim($gamertag);
-        $url = 'http://live.xbox.com/' . $region . '/Profile?gamertag=' . urlencode($gamertag);
+        $url = 'https://account.xbox.com/' . $region . '/Profile?gamerTag=' . urlencode($gamertag);
         $key = $this->version . ':profile.' . $gamertag;
 
         $data = $this->__cache->fetch($key);
@@ -44,26 +44,31 @@ class API extends Base
             $freshness = 'from cache';
         }
 
-        if (stripos($data, '<section class="contextRail custom">')) {
+        /**
+         * !Important!
+         * Fields that have been nulled are no longer available from Xbox.com.
+         * Blame Microsoft, not me. Thanks! :)
+         */
+        if (stripos($data, '<div id="gamerInfo">')) {
             $user = array();
             $user['gamertag']                   = trim($gamertag);
-            $user['tier']                       = (strpos($data, '<div class="goldBadge">') !== false) ? 'gold' : 'silver';
-            $user['badges']['xboxlaunchteam']   = false;
-            $user['badges']['nxelaunchteam']    = false;
-            $user['badges']['kinectlaunchteam'] = false;
-            $user['avatar']['full']             = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatar-body.png';
-            $user['avatar']['small']            = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-s.png';
-            $user['avatar']['large']            = 'http://avatar.xboxlive.com/avatar/' . $gamertag . '/avatarpic-l.png';
-            $user['avatar']['tile']             = trim(str_replace('https://avatar-ssl', 'http://avatar', $this->find($data, '<img class="gamerpic" src="', '" alt="')));
-            $user['gamerscore']                 = (int) trim($this->find($data, '<div class="gamerscore">', '</div>'));
-            $user['reputation']                 = 0;
-            $user['presence']                   = trim(str_replace("\r\n", ' - ', $this->find($data, '<div class="presence">', '</div>')));
-            $user['online']                     = (bool)(strpos($user['presence'], 'Online') !== false && strpos($user['presence'], 'Online Status Unavailable') === false);
-            $user['gamertag']                   = str_replace(array('&#39;s Profile', '\'s Profile'), '', trim($this->find($data, '<h1 class="pageTitle">', '</h1>')));
-            $user['motto']                      = $this->clean(trim(strip_tags($this->find($data, '<div class="motto">', '</div>'))));
-            $user['name']                       = trim(strip_tags($this->find($data, '<div class="name" title="', '">')));
-            $user['location']                   = trim(strip_tags(str_replace('<label>Location:</label>', '', trim($this->find($data, '<div class="location">', '</div>')))));
-            $user['biography']                  = trim(strip_tags(str_replace('<label>Bio:</label>', '', trim($this->find($data, '<div class="bio">', '</div>')))));
+            $user['tier']                       = null;
+            $user['badges']['xboxlaunchteam']   = null;
+            $user['badges']['nxelaunchteam']    = null;
+            $user['badges']['kinectlaunchteam'] = null;
+            $user['avatar']['full']             = 'https://avatar-ssl.xboxlive.com/avatar/' . $gamertag . '/avatar-body.png';
+            $user['avatar']['small']            = 'https://avatar-ssl.xboxlive.com/avatar/' . $gamertag . '/avatarpic-s.png';
+            $user['avatar']['large']            = 'https://avatar-ssl.xboxlive.com/avatar/' . $gamertag . '/avatarpic-l.png';
+            $user['avatar']['tile']             = null;
+            $user['gamerscore']                 = (int) trim($this->find($data, '<div class="gamerScore">', '</div>'));
+            $user['reputation']                 = (int) trim($this->find($data, 'data-ringpercent ="', '">'));
+            $user['presence']                   = null;
+            $user['online']                     = null;
+            $user['gamertag']                   = trim($this->find($data, '<div id="myGamerTag">', '</div>'));
+            $user['motto']                      = null;
+            $user['name']                       = null;
+            $user['location']                   = null;
+            $user['biography']                  = null;
 
             $recentactivity = $this->fetch_games($gamertag, $region);
             if (is_array($recentactivity)) {
@@ -72,35 +77,10 @@ class API extends Base
                 $user['recentactivity'] = null;
             }
 
-            if (strpos($data, '<div class="badges">') !== false) {
-                if (strpos($data, 'xbox360Badge') !== false) {
-                    $user['badges']['xboxlaunchteam'] = true;
-                }
-                if (strpos($data, 'nxeBadge') !== false) {
-                    $user['badges']['nxelaunchteam'] = true;
-                }
-                if (strpos($data, 'kinectBadge') !== false) {
-                    $user['badges']['kinectlaunchteam'] = true;
-                }
-            }
-
-            $starvalue = array(
-                'Empty'        => 0,
-                'Quarter'      => 1,
-                'Half'         => 2,
-                'ThreeQuarter' => 3,
-                'Full'         => 4,
-            );
-
-            preg_match_all('~<div class="Star (.*?)"></div>~si', $data, $reputation);
-            foreach ($reputation[1] as $value) {
-                $user['reputation'] = $user['reputation'] + $starvalue[$value];
-            }
-
             $user['freshness'] = $freshness;
 
             return $user;
-        } elseif (stripos($data, 'errorCode: \'404\'')) {
+        } elseif (stripos($data, '404avatar.png')) {
             $this->error = 501;
 
             return false;
