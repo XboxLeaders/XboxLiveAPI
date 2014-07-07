@@ -209,24 +209,20 @@ class API extends Base
     public function fetch_games($gamertag, $region)
     {
         $gamertag  = trim($gamertag);
-        $url       = 'https://live.xbox.com/' . $region . '/Activity';
+        $url       = 'https://account.xbox.com/' . $region . '/Achievements/Compare?gamerTag=' . urlencode($gamertag);
         $key       = $this->version . ':games.' . $gamertag;
         $data      = $this->__cache->fetch($key);
         $freshness = 'from cache';
 
         if (!$data) {
             $data      = $this->fetch_url($url);
-            $post_data = '__RequestVerificationToken=' . urlencode(trim($this->find($data, '<input name="__RequestVerificationToken" type="hidden" value="', '" />'))) . '&compareTo=' . urlencode($gamertag);
-            $headers   = array('X-Requested-With: XMLHttpRequest', 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
-            $data      = $this->fetch_url('https://live.xbox.com/' . $region . '/Activity/Summary?compareTo=' . urlencode($gamertag) . '&lc=1033', $url, 10, $post_data, $headers);
             $freshness = 'new';
             $this->__cache->store($key, $data, 3600);
         }
 
-        $json = json_decode($data, true);
+        preg_match_all('~<div class="compareItems">(.*?)<\/div>~si', $data, $games_data);
 
-        if ($json['Success'] == 'true' && $json['Data']['Players'][0]['Gamertag'] != $this->account_gamertag) {
-            $json                             = $json['Data'];
+        if (!empty($games_data[1])) {
             $games                            = array();
             $games['gamertag']                = $g = $json['Players'][0]['Gamertag'];
             $games['gamerscore']['current']   = $json['Players'][0]['Gamerscore'];
