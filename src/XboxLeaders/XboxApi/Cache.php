@@ -1,17 +1,8 @@
 <?php
-/**
-* This file takes care of all the caching done by the API.
-*
-* LICENSE: MIT (http://opensource.org/licenses/mit-license.html)
-*
-* @category     XboxLeaders
-* @package      XboxLiveAPI
-* @copyright    Copyright (c) 2012 - 2014 XboxLeaders
-* @license      http://xboxleaders.github.io/license/ MIT License
-* @version      2.0
-* @link         http://github.com/XboxLeaders/XboxLiveAPI
-* @since        File available since Release 1.0
-*/
+namespace XboxLeaders\XboxApi\Cache;
+
+use XboxLeaders\XboxApi\Config;
+use XboxLeaders\XboxApi\Utils;
 
 class Cache
 {
@@ -22,7 +13,7 @@ class Cache
     public $index       = array();
     public $__memcached = null;
     
-    function __construct($driver = null, $root = null)
+    public function __construct($driver = null, $root = null)
     {
         if ($driver)
         {

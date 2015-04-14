@@ -9,8 +9,6 @@ Stay up to date [@xboxleaders](http://twitter.com/xboxleaders).
 
 Get started at http://xboxleaders.com/get-started/!
 
-Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ZHLXELDHACX6) to keep the servers alive!
-
 ##License
 - XboxLiveAPI source files are licensed under the MIT License:
   - http://opensource.org/licenses/mit-license.html
@@ -22,13 +20,7 @@ Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?
 
 ## Requirements
   1. [PHP](http://php.net/downloads.php) 5.4 or higher required
-    - [cURL](http://php.net/curl)
-    - [JSON](http://pecl.php.net/package/json)
-  2. [Apache](http://httpd.apache.org) 2.2 or higher required
-    - mod_header
-    - mod_expires
-    - mod_rewrite
-  3. Caching Engines (Highly Recommended!)
+  2. Caching Engines (Highly Recommended!)
     - [APC](http://pecl.php.net/package/apc)
     - [XCache](http://xcache.lighttpd.net)
     - [Memcached](http://memcached.org)
@@ -36,4 +28,3 @@ Please consider [donating to the project](https://www.paypal.com/cgi-bin/webscr?
 ## Composer
   1. Get [Composer](http://getcomposer.org)
   2. Require xboxleaders/xboxliveapi `php composer.phar require xboxleaders/xboxliveapi`
-  3. Installation dependencies not available

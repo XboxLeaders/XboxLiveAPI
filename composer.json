@@ -2,7 +2,7 @@
   "name": "xboxleaders/xboxliveapi",
   "description": "Simple & Powerful RESTful API for Xbox LIVE",
   "keywords": ["xbox", "xboxlive", "api", "rest"],
-  "homepage": "http://xboxleaders.github.io/",
+  "homepage": "http://xboxleaders.com/",
   "authors": [
     {
       "name": "Jason Clemons",
@@ -21,6 +21,7 @@
       "MIT"
   ],
   "require": {
-      "php": ">=5.4.0"
+      "php": ">=5.4.0",
+      "guzzle/guzzle": "3.8.1"
   }
 }
