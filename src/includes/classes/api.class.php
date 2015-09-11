@@ -20,6 +20,81 @@ class API extends Base
      * Version of this API
      */
     public $version = '2.0';
+	
+    /**
+     * Send message
+     *
+     * @access public
+     * @var    string $gamertag
+     * @var    string $region
+	 * @var    string $recipients
+     * @var    string $message
+     * @return array
+     */
+	public function sendMessage($gamertag, $region, $recipients, $message)
+	{
+		$gamertag = trim($gamertag);
+		$url = 'https://account.xbox.com/' . $region . '/Messages';
+		$key = $this->version . ':sendMessage.' . $gamertag;
+		
+        $data      = $this->fetch_url($url);
+        $post_data = '__RequestVerificationToken=' . urlencode(trim($this->find($data, '<input name="__RequestVerificationToken" type="hidden" value="', '" />'))) . '&recipients=' . urlencode($recipients) . '&message=' . urlencode($message);
+		
+        $headers   = array('X-Requested-With: XMLHttpRequest', 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
+        $data      = $this->fetch_url('https://account.xbox.com/' . $region . '/Messages/Send', $url, 10, $post_data, $headers);
+
+        return json_decode($data, true);
+		
+	}
+	
+    /**
+     * Fetch conversation with 
+     *
+     * @access public
+     * @var    string $gamertag
+	 * @var    string $region
+     * @var    string $sender
+     * @return array
+     */
+	public function fetchConversationWith($gamertag, $region, $sender)
+	{
+		$gamertag = trim($gamertag);
+		$url = 'https://account.xbox.com/' . $region . '/Messages/UserConversation?senderGamerTag=' . $sender;
+		$key = $this->version . ':getMessages.' . $gamertag;
+	
+		$data      = $this->fetch_url($url);
+		$doc = new DOMDocument();
+		if(!empty($sender) && !empty($gamertag)) {
+			$doc->loadHtml($data);
+		    $xpath = new DOMXPath($doc); 
+		    $postThumbLinks = $xpath->query("//div[@class='messageContent']");
+
+			$i = 0;
+			$array = array();
+			$last_sender = "";
+		    foreach($postThumbLinks as $link) {
+
+				$body = $this->find($link->ownerDocument->saveHTML($link),'<div class="messageBody">','</div>');
+				$time = $this->find($link->ownerDocument->saveHTML($link),'<div class="sentDate localTime">','</div>');
+				$sender = $this->find($link->ownerDocument->saveHTML($link),'<div class="senderGamertag">','</div>');
+
+				$array[$i]['message'] = $body;
+				$array[$i]['time'] = $time;
+				if($sender){
+					$array[$i]['sender'] = $sender;
+					$last_sender = $sender;
+				}else{
+					$array[$i]['sender'] = $last_sender;
+				}
+
+				$i++;
+		    }
+		} else {
+		    return false;
+		}
+
+		return $array;
+	}
 
     /**
      * Fetch profile information
