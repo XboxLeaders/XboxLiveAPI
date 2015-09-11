@@ -46,6 +46,9 @@ class Base
         304 => 'No method specified.',
         305 => 'The region supplied is not supported by Xbox LIVE.',
         306 => 'The query supplied was not valid.',
+		307 => 'No recipient specified',
+		308 => 'No message specified',
+		309 => 'No sender specified',
         500 => 'There was an internal server error.',
         501 => 'The gamertag supplied does not exist on Xbox Live.',
         502 => 'The gamertag supplied has never played this game or does not exist on Xbox Live.',
@@ -211,7 +214,7 @@ class Base
             $this->add_cookie('.xbox.com', 'PersistentId', '0a652e56e40f42caac3ac84fad02ed01', '/', time() + (60*60*24*365));
 
             // Send the data to Xbox and retrieve the response.
-            $url = 'https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=11&ct=' . time() . '&rver=6.0.5286.0&wp=MBI&wreply=https://live.xbox.com:443/xweb/live/passport/setCookies.ashx%3Frru%3Dhttp%253a%252f%252fwww.xbox.com%252fen-US%252f&flc=3d1033&lc=1033&cb=reason=0&returnUrl=http%253a%252f%252fwww.xbox.com%252fen-US%252f%253flc%253d1033&id=66262';
+            $url = 'https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=12&ct=' . time() . '&rver=6.2.6289.0&wp=MBI_SSL&wreply=https:%2F%2Faccount.xbox.com:443%2Fpassport%2FsetCookies.ashx%3Frru%3Dhttps%253a%252f%252faccount.xbox.com%252fen-US%252f&lc=1033&id=292543&cbcxt=0';
             $result = $this->fetch_url($url, 'http://www.xbox.com/en-US/');
 
             $this->stack_trace[] = array(
@@ -261,10 +264,10 @@ class Base
                 'result'    => $result
             );
 
-            $result = $this->fetch_url('http://www.xbox.com/en-US/');
+            $result = $this->fetch_url('https://account.xbox.com/en-US/social');
 
             // Make sure we got signed in...
-            if (stripos($result, 'currentUser.isSignedIn = true') !== false) {
+            if (stripos($result, '<h3 class="feedSectionTitle">Activity feed</h3>') !== false) {
                 $this->logged_in = true;
                 return true;
             } else {
@@ -272,6 +275,7 @@ class Base
                 $this->save_stack_trace();
                 return false;
             }
+			
         }
     }
 
